@@ -23,6 +23,10 @@
  * @param {number[]} nums
  * @param {number} target
  * @return {number}
+ * 
+ * Time complexity : O(logn).
+ * The search space is halved each time, so the time complexity is O(logn).
+ * Space complexity : O(1).
  */
 const search = function (nums, target) {
     // set low index and high index
