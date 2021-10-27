@@ -18,6 +18,8 @@
 /**
  * @param {number[]} nums
  * @return {number[]}
+ * Time Complexity: O(N), where N is the length of nums.
+ * Space Complexity: O(N) if you take output into account and O(1) otherwise. 
  */
 const sortedSquares = function (nums) {
     let start = 0, end = nums.length - 1;

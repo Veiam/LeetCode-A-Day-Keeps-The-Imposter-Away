@@ -24,6 +24,8 @@
  * @param {number[]} nums
  * @param {number} k
  * @return {void} Do not return anything, modify nums in-place instead.
+ * Time complexity: O(n). Only one pass is used.
+ * Space complexity: O(1). Constant extra space is used.
  */
 const rotate = function (nums, k) {
     let [start, count] = [0, 0];
