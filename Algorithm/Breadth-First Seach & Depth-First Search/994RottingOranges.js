@@ -30,8 +30,10 @@
  * BFS
  * @param {number[][]} grid
  * @return {number}
+ * 
  * Time Complexity: O(N), where N is the size of the grid.
  * Space Complexity: O(N), where N is the size of the grid.
+ * If we perform inplace, we can get O(1) space but O(N^2) time.
  */
 const orangesRotting = function (grid) {
     // row, col, and queue initialization
@@ -84,4 +86,56 @@ const orangesRotting = function (grid) {
     }
     // if all oranges are rotten then return minute, else return -1
     return oranges === 0 ? minute : -1;
+};
+
+/**
+ * DFS
+ * @param {number[][]} grid
+ * @return {number}
+ * 
+ * Time Complexity: O(N^2), where N is the size of the grid.
+ * Space Complexity: O(1), inplace replacement
+ */
+const orangesRotting = function (grid) {
+    // row, col, and queue initialization
+    const row = grid.length, col = grid[0].length;
+    // keep track of orange counts and minute passed by
+    // since our first pass is rotten oranges only, minute is initalized to -1
+    const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+    function rot(grid, x, y, minutes) {
+        for (const dir of dirs) {
+            const newX = x + dir[0];
+            const newY = y + dir[1];
+            // if we find a fresh orange or if cell has higher value than current minutes
+            if (newX >= 0 && newY >= 0 && newX < row && newY < col && (grid[newX][newY] === 1 || grid[newX][newY] > minutes)) {
+                grid[newX][newY] = minutes;
+                rot(grid, newX, newY, minutes + 1);
+            }
+        }
+    }
+
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            if (grid[i][j] === 2) {
+                // start at 3 since intial values can be either 0, 1, or 2
+                rot(grid, i, j, 3);
+            }
+        }
+    }
+
+    let max = 0;
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            // if any fresh orange is found then we can't rot them all
+            if (grid[i][j] === 1) {
+                return -1;
+            }
+            else {
+                max = Math.max(max, grid[i][j]);
+            }
+        }
+    }
+
+    return max > 0 ? max - 2 : 0;
 };

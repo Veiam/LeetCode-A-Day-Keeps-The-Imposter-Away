@@ -16,6 +16,9 @@
 /**
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
+ * 
+ * Time Complexity: O(n). The input array is traversed at most once. Thus the time complexity is O(n).
+ * Space Complexity : O(1). Only constant space is used.
  */
 const moveZeroes = function (nums) {
     for (let index = 0, lastNonZero = 0; index < nums.length; index++) {
