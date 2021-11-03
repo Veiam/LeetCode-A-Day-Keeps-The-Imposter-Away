@@ -27,6 +27,8 @@
 /**
  * @param {string} s
  * @return {number}
+ * Time complexity : O(n), where n is the length of s.
+ * Space complexity : O(n), where n is the size of map.
  */
 const lengthOfLongestSubstring = function (s) {
     // start and end of window, max value, and map

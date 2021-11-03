@@ -32,7 +32,9 @@
  * @param {number} sr
  * @param {number} sc
  * @param {number} newColor
- * @return {number[][]}cod
+ * @return {number[][]}
+ * Time Complexity: O(N), where N is the number of pixels in the image. We might process every pixel.
+ * Space Complexity: O(N), the size of the implicit call stack when calling dfs.
  */
 const floodFill = function (image, sr, sc, newColor) {
     // recursive
@@ -75,7 +77,9 @@ const floodFill = function (image, sr, sc, newColor) {
  * @param {number} sr
  * @param {number} sc
  * @param {number} newColor
- * @return {number[][]}cod
+ * @return {number[][]}
+ * Time Complexity: O(N), where N is the number of pixels in the image. We might process every pixel.
+ * Space Complexity: O(N), the size of the implicit call stack when calling bfs.
  */
 const floodFill = function (image, sr, sc, newColor) {
     // get the first color

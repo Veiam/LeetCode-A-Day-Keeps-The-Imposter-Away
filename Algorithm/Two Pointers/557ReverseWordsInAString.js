@@ -18,6 +18,8 @@
 /**
  * @param {string} s
  * @return {string}
+ * Time complexity : O(N), where nn is the length of the string.
+ * Space complexity : O(1), it's a constant space solution.
  */
 const reverseWords = function (s) {
     // turn s into an array

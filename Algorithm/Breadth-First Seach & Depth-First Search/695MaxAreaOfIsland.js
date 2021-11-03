@@ -32,6 +32,8 @@
  * DFS
  * @param {number[][]} grid
  * @return {number}
+ * Time Complexity: O(R*C), where R is the number of rows in the given grid, and C is the number of columns. We visit every square once.
+ * Space complexity: O(1), we perform in-place replacement so it's a constant space.
  */
 const maxAreaOfIsland = function (grid) {
     // dfs recursive
@@ -61,6 +63,8 @@ const maxAreaOfIsland = function (grid) {
  * BFS
  * @param {number[][]} grid
  * @return {number}
+ * Time Complexity: O(R*C), where R is the number of rows in the given grid, and C is the number of columns. We visit every square once.
+ * Space complexity: O(N), where N is the size of the queue. 
  */
 const maxAreaOfIsland = function (grid) {
     // bfs iterative

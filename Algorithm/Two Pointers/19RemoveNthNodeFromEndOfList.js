@@ -29,6 +29,8 @@
  * @param {ListNode} head
  * @param {number} n
  * @return {ListNode}
+ * Time complexity : The algorithm makes one traversal of the list of L nodes. Therefore time complexity is O(L).
+ * Space complexity : O(1). We only used constant extra space.
  */
 const removeNthFromEnd = function (head, n) {
     // dummy header

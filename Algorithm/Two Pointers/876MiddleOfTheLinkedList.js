@@ -25,6 +25,8 @@
 /**
  * @param {ListNode} head
  * @return {ListNode}
+ * Time Complexity: O(N), where NN is the number of nodes in the given list.
+ * Space Complexity: O(1), the space used by slow and fast.
  */
 const middleNode = function (head) {
     // fast and slow pointer

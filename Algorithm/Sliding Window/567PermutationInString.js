@@ -18,6 +18,8 @@
  * @param {string} s1
  * @param {string} s2
  * @return {boolean}
+ * Time complexity: O(l1 + (l2 - l1), where l1 is the length of string and l2 is the length of pattern.
+ * Space complexity: O(1). Constant space is used.
  */
 const checkInclusion = function (s1, s2) {
     // if pattern is longer than string
