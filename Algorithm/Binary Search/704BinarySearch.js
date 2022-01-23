@@ -35,15 +35,16 @@ const search = function (nums, target) {
     while (low <= high) {
         // find mid point between low and high index
         const mid = Math.floor(low + (high - low) / 2);
+        const current = nums[mid];
 
         // if match is found, return the index
-        if (nums[mid] === target) {
+        if (current === target) {
             return mid;
         }
 
         // if the num is bigger than target then we need to look for
         // a smaller value
-        else if (nums[mid] > target) {
+        else if (current > target) {
             high = mid - 1;
         }
 

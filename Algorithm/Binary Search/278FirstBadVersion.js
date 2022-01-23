@@ -44,18 +44,12 @@ const solution = function (isBadVersion) {
      * @param {integer} n Total versions
      * @return {integer} The first bad version
      */
-    return function (n) {
+     return function (n) {
         let start = 1, end = n;
 
         while (start <= end) {
             const mid = Math.floor(start + (end - start) / 2);
-            // if we found a bad version
-            // then check if the previous one is clean
-            if (isBadVersion(mid) !== isBadVersion(mid - 1)) {
-                return mid;
-            }
-
-            else if (isBadVersion(mid)) {
+            if (isBadVersion(mid)) {
                 end = mid - 1;
             }
 
@@ -63,5 +57,6 @@ const solution = function (isBadVersion) {
                 start = mid + 1;
             }
         }
+        return start;
     };
 };

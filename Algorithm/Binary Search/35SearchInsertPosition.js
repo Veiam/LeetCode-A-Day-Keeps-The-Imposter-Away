@@ -43,12 +43,13 @@ const searchInsert = function (nums, target) {
 
     while (start <= end) {
         const mid = Math.floor((start + end) / 2);
+        const current = nums[mid];
 
-        if (nums[mid] === target) {
+        if (current === target) {
             return mid;
         }
         // search left side
-        else if (nums[mid] > target) {
+        else if (current > target) {
             end = mid - 1;
         }
         // search right side
