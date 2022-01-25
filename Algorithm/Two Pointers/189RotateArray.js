@@ -32,17 +32,44 @@ const rotate = function (nums, k) {
     // we only wants to swap nums.length elements
     while (count < nums.length) {
         // store starting values
-        let [current, prev] = [start, nums[start]];
+        let [currentIndex, preVal] = [start, nums[start]];
         do {
             // if current goes over the length
             // it should circle back to 0.
-            current = (current + k) % nums.length;
+            currentIndex = (currentIndex + k) % nums.length;
             // swap previous value and current value;
-            [nums[current], prev] = [prev, nums[current]];
+            [nums[currentIndex], preVal] = [preVal, nums[currentIndex]];
             count++;
-        } while (current !== start)
+        } while (currentIndex !== preVal)
         // if we are back where we started
         // iterate for the next index
         start++
     }
 };
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {void} Do not return anything, modify nums in-place instead.
+ * Time complexity: O(n). n elements are reversed a total of two times.
+ * Space complexity: O(1. No extra space is used.SS
+ */
+const rotate = function (nums, k) {
+    k %= nums.length;
+    reverse(nums, 0, nums.length - 1);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, nums.length - 1);
+
+}
+
+// when we rotate the array k times, k elements from the back ned of the array come to the front
+// and the rest of the elements from the front shift
+const reverse = function (nums, start, end) {
+    while (start < end) {
+        let temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        start++;
+        end--;
+    }
+}
