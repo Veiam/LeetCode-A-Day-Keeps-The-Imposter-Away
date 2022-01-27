@@ -49,5 +49,6 @@ const twoSum = function (numbers, target) {
             return [start + 1, end + 1];
         }
     }
-
+    // in case there is no solution
+    return [0, 0];
 };

@@ -18,19 +18,18 @@
 /**
  * @param {string} s
  * @return {string}
- * Time complexity : O(N), where nn is the length of the string.
+ * Time complexity : O(N), where n is the length of the string.
  * Space complexity : O(1), it's a constant space solution.
  */
 const reverseWords = function (s) {
     // turn s into an array
     s = s.split('');
-    let = start = 0;
     // loop through the array
-    for (let cur = 0; cur <= s.length; cur++) {
+    for (let start = 0, i = 0; i <= s.length; i++) {
         // if we reached the end or current index holds a space
-        if (s[cur] === ' ' || cur === s.length) {
+        if (s[i] === ' ' || i === s.length) {
             // set an end value to current index - 1
-            let end = cur - 1;
+            let end = i - 1;
             // until we reach the middle
             while (start < end) {
                 // swap start and end
@@ -39,7 +38,7 @@ const reverseWords = function (s) {
                 end--;
             }
             // set the next start to a character after the current space
-            start = cur + 1;
+            start = i + 1;
         }
     }
     // join the array back as a string.
