@@ -55,7 +55,7 @@ const checkInclusion = function (s1, s2) {
             if (end - start === s1.length)
                 return true;
 
-            // else check if pattern start char of the window
+            // else check if the start of the window matches a char in pattern
             if (pattern.has(s2[start])) {
                 // if so retrieve it and increase the pattern value
                 pattern.set(s2[start], pattern.get(s2[start]) + 1);

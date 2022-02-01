@@ -51,3 +51,26 @@ const lengthOfLongestSubstring = function (s) {
     // return max
     return max;
 };
+
+
+/**
+ * @param {string} s
+ * @return {number}
+ * Time complexity : O(n), where n is the length of s.
+ * Space complexity : O(n), where n is the size of map.
+ */
+ const lengthOfLongestSubstring = function (s) {
+    let max = 0, map = {};
+    for(let left = 0, right = 0; right < s.length; right++){
+        // if the current char is in the map
+        if(s[right] in map){
+            // move the window
+            left = Math.max(map[s[right]], left);
+        }
+        // get the max
+        max = Math.max(max, right - left + 1);
+        // set currnet char's position in the map
+        map[s[right]] = right + 1;
+    }
+    return max;
+};
