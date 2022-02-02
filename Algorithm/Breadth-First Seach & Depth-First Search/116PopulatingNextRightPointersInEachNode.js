@@ -25,31 +25,30 @@ const connect = function (root) {
     if (root === null)
         return root;
     // start with the root node
-    const stack = [root];
+    const queue = [root];
 
     // As long as stack is not empty
-    while (stack.length) {
+    while (queue.length) {
         // initialize a current level length
-        const length = stack.length;
-
+        const length = queue.length;
+        let prev = null;
         for (let i = 0; i < length; i++) {
             // get first element
-            const current = stack.shift();
+            const current = queue.shift();
 
-            // set next
-            if (i < length - 1) {
-                current.next = stack[0];
+            if(prev){
+                prev.next = current;
             }
-            else {
-                current.next = null;
-            }
+
 
             // push left
             if (current.left !== null)
-                stack.push(current.left);
+                queue.push(current.left);
             // push right
             if (current.right !== null)
-                stack.push(current.right);
+                queue.push(current.right);
+
+            prev = current;
         }
 
     }

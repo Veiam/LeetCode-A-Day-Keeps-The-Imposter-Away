@@ -95,7 +95,7 @@ const mergeTrees = function (root1, root2) {
         else
             stack.push([node[0].left, node[1].left]);
 
-        //erge right
+        // merge right
         if (node[0].right === null)
             node[0].right = node[1].right;
         else

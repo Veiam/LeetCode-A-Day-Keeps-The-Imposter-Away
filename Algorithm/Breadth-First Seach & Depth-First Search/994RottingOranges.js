@@ -72,7 +72,7 @@ const orangesRotting = function (grid) {
             for (const dir of dirs) {
                 const newX = x + dir[0];
                 const newY = y + dir[1];
-                // if we find a fresh orange, then rotten it and add it to the queue
+                // if we find a fresh orange, then rot it and add it to the queue
                 if (newX >= 0 && newY >= 0 && newX < row && newY < col && grid[newX][newY] === 1) {
                     queue.push([newX, newY]);
                     grid[newX][newY] = 2;
