@@ -72,3 +72,50 @@ const checkInclusion = function (s1, s2) {
     // we did not find one
     return false;
 }
+
+/**
+ * object instead of map
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ * Time complexity: O(l1 + (l2 - l1), where l1 is the length of string and l2 is the length of pattern.
+ * Space complexity: O(1). Constant space is used.
+ */
+const checkInclusion = function (s1, s2) {
+    if (s1.length > s2.length)
+        return false;
+
+    const map = {};
+    let count = 0;
+    for (let i = 0; i < s1.length; i++) {
+        const char = s1[i];
+        if (!(char in map)) {
+            map[char] = 0;
+            count++;
+        }
+        map[char]++;
+    }
+    let start = 0, end = 0;
+    while (end < s2.length) {
+        const char = s2[end];
+        if (char in map) {
+            map[char]--;
+            if (map[char] === 0) {
+                count--;
+            }
+        }
+        end++;
+        while (count === 0) {
+            if (end - start === s1.length)
+                return true;
+            const char = s2[start];
+            if (char in map) {
+                map[char]++;
+                if (map[char] === 1)
+                    count++;
+            }
+            start++;
+        }
+    }
+    return false;
+}
