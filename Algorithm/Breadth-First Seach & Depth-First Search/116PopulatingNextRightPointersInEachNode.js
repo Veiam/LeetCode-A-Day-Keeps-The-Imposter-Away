@@ -88,8 +88,8 @@ const connect = function (root) {
  * @param {Node} root
  * @return {Node}
  * 
- * Time Complexity: O(N)O(N) since we process each node exactly once.
- * Space Complexity: O(1)O(1) since we don't make use of any additional data structure
+ * Time Complexity: O(N) since we process each node exactly once.
+ * Space Complexity: O(1) since we don't make use of any additional data structure
  * for traversing nodes on a particular level like the previous approach does.
  */
 const connect = function (root) {

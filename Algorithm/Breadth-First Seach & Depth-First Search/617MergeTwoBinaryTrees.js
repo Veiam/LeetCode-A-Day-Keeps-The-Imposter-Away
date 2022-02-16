@@ -39,11 +39,10 @@
  */
 const mergeTrees = function (root1, root2) {
     // if root1 is empty then return root2
-    if (root1 === null)
-        return root2;
     // if root2 is empty then return root1
-    if (root2 === null)
-        return root1;
+    if(!root1 || !root2){
+        return root1 === null ? root2 : root1;
+    }
     // merge
     root1.val += root2.val;
     // recursively merge left
