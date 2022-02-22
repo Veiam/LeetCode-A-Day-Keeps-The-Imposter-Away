@@ -45,6 +45,32 @@ const climbStairs = function (n) {
 };
 
 /**
+ * Top down, memoization
+ * @param {number} n
+ * @return {number}
+ * Time complexity : O(n). Size of recursion tree can go upto n.
+ * Space complexity : O(n). The depth of recursion tree can go upto n.
+ */
+ const climbStairs = function(n) {
+    const memo = [];
+    function climb(sum, target, memo){
+        if(sum > target){
+            return 0;
+        }
+        if( sum == target){
+            return 1;
+        }
+        if(memo[sum] > 0){
+            return memo[sum];
+        }
+        memo[sum] = climb(sum+1, target, memo) + climb(sum+2, target, memo);
+        return memo[sum];
+    }
+    
+    return climb(0, n, memo);
+};
+
+/**
  * Bottom up, DP
  * @param {number} n
  * @return {number}
