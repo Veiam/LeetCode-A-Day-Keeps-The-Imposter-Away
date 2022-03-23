@@ -8,7 +8,7 @@
 const maxSubArray = function (nums) {
     // Initialize max subarray sum and current subarray sub with first index
     let cur = nums[0], max = cur;
-    // Go through the nums
+    // Go through the nums from second element if it exists.
     for (let i = 1; i < nums.length; i++) {
         const num = nums[i];
         // We can either keep our current subarray + num or start a new array
