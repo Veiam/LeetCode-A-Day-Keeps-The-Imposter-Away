@@ -1,4 +1,5 @@
-// Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+// Given two integer arrays nums1 and nums2, return an array of their intersection.
+// Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
 
 // Example 1:
 // Input: nums1 = [1,2,2,1], nums2 = [2,2]
@@ -14,11 +15,13 @@
 // 0 <= nums1[i], nums2[i] <= 1000
 
 /**
+ * Intersection here does not mean matching elements in order.
+ * It just means matching element and they do not need to be in order.
  * @param {number[]} nums1
  * @param {number[]} nums2
  * @return {number[]}
  * Time Complexity O(m + n), where m is nums1 length and n is nums 2 length
- * Space Complexity O( n), where n is nums 2 length
+ * Space Complexity O(n), where n is nums 2 length
  */
 const intersect = function (nums1, nums2) {
     const map = {};
