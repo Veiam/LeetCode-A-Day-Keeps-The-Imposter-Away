@@ -13,6 +13,7 @@
 // s and t consist of lowercase English letters.
 
 /**
+ * Same as the ransom note problem
  * @param {string} s
  * @param {string} t
  * @return {boolean}
@@ -52,5 +53,5 @@ const isAnagram = function (s, t) {
  * Space Complexity: O(1), constance space is used.
  */
 const isAnagram = function (s, t) {
-    return s.split('').sort().join('') == t.split('').sort().join('');
+    return s.split('').sort().join('') === t.split('').sort().join('');
 };

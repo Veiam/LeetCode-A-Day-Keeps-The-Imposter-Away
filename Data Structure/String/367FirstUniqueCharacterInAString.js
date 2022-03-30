@@ -39,3 +39,17 @@ const firstUniqChar = function (s) {
     }
     return -1;
 };
+
+/**
+ * @param {string} s
+ * @return {number}
+ * Time Complexity: O(n^2), worst case
+ * Spae Complexity: O(1), no extra space is used
+ */
+ const firstUniqChar = function(s) {
+    for(let i = 0; i < s.length; i++){
+        if(s.indexOf(s[i]) === s.lastIndexOf(s[i]))
+            return i;
+    }
+    return -1;
+};

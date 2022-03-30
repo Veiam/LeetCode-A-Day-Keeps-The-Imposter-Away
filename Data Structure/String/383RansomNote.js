@@ -18,6 +18,7 @@
 // ransomNote and magazine consist of lowercase English letters.
 
 /**
+ * Same as the valid anagram problem
  * @param {string} ransomNote
  * @param {string} magazine
  * @return {boolean}
