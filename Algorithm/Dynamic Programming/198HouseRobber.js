@@ -74,3 +74,22 @@ const rob = function (nums) {
     // next holds a current which is max
     return next;
 };
+/**
+ * Bottom up, tabulation
+ * @param {number[]} nums
+ * @return {number}
+ * Time Complexity: O(N) since we have a loop from N−2 to 0 and we use the precalculated values of our dynamic programming table to
+ * calculate the current value in the table which is a constant time operation.
+ * Space Complexity: O(1) since we are not using a table to store our values.
+ * Simply using two variables will suffice for our calculations.
+ */
+ const rob = function (nums) {
+    const robbed = [];
+
+    robbed[nums.length] = 0;
+    robbed[nums.length - 1] = nums[nums.length - 1];
+    for(let i = nums.length - 2; i >=0; i--){
+        robbed[i] = Math.max(robbed[i+2] + nums[i], robbed[i+1]);   
+    }
+    return robbed[0];
+};

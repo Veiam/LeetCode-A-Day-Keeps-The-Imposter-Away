@@ -29,7 +29,7 @@ const searchMatrix = function (matrix, target) {
     // binary search
     while (start <= end) {
         // get the mid
-        let mid = Math.floor((start + end) / 2);
+        let mid = Math.floor(start + (end - start)/ 2);
         // mid / col will gives us a row index
         // mid & col will gives us a col index
         // above works because mid = (row index * col length) + col index

@@ -29,3 +29,17 @@ const singleNumber = function (nums) {
     // By XOR'ing all num in nums, we can find a missing number.
     return nums.reduce((prev, cur) => prev ^ cur);
 };
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ * Time complexity : O(n). We only iterate through nums, so the time complexity is the number of elements in nums.
+ * Space complexity : O(1).
+ */
+ const singleNumber = function(nums) {
+    let answer = nums[0];
+    for(let i = 1; i < nums.length; i++){
+        answer ^=  nums[i];
+    }
+    return answer;
+};

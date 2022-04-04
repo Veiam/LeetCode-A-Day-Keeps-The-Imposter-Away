@@ -13,6 +13,7 @@
 // 1 <= numRows <= 30
 
 /**
+ * DP
  * @param {number} numRows
  * @return {number[][]}
  * Time Complexity: O(n^2) outerloops runs numRows time while innerloop runs row!

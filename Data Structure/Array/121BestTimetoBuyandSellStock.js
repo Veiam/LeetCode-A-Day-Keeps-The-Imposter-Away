@@ -41,3 +41,22 @@ const maxProfit = function (prices) {
     // return max or 0 depend on whether or not we found a profit
     return max >= 0 ? max : 0;
 };
+
+/**
+ * @param {number[]} prices
+ * @return {number}
+ * Time Complexity: O(n), where n is number of index in prices.
+ * Space Complexity: O(1), constant space is used.
+ */
+ const maxProfit = function(prices) {
+    let low = prices[0], profit = 0;
+    for(let i = 1; i < prices.length; i++){
+        // check the current price
+        let cur = prices[i];
+        // see if we can get more profit
+        profit = Math.max(cur - low, profit);
+        // see if it's a new low
+        low = Math.min(low, cur);
+    }
+    return profit;
+};

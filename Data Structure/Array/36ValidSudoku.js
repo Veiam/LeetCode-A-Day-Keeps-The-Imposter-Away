@@ -90,3 +90,47 @@ const isValidSudoku = function (board) {
     }
     return true;
 };
+
+/**
+ * Same as the abovebut initialize storages from the start.
+ * @param {character[][]} board
+ * @return {boolean}
+ */
+ const isValidSudoku = function(board) {
+    const rows = {}, cols = {}, boards = {};
+    
+    for(let i = 0; i < 9; i++){
+        rows[i] = new Set();
+        cols[i] = new Set();
+        boards[i] = new Set();
+    }
+    
+    for(let row = 0; row < 9; row++){
+        for(let col = 0; col < 9; col++){
+            const cell = board[row][col];
+            
+            if( cell === '.')
+                continue;
+            
+            if(rows[row].has(cell)){
+                return false;
+            }
+            rows[row].add(cell);
+            
+            if(cols[col].has(cell)){
+                return false;
+            }
+            cols[col].add(cell);
+            
+            const square = Math.floor(row/3) *3 + Math.floor(col/3);
+            if(boards[square].has(cell)){
+                return false;
+            }
+            boards[square].add(cell);
+            
+        }
+    }
+    
+    return true;
+};
+

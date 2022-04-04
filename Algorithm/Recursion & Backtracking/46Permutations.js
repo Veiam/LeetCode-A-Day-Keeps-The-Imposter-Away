@@ -21,7 +21,7 @@
  * Recursion, backtrack
  * @param {number[]} nums
  * @return {number[][]}
- * ime complexity : O(∑(k=1 to N) P(N,k)) where P(N, k) = N!/(N - k)! = N (N - 1) ... (N - k + 1) is so-called k-permutations_of_n,
+ * Time complexity : O(∑(k=1 to N) P(N,k)) where P(N, k) = N!/(N - k)! = N (N - 1) ... (N - k + 1) is so-called k-permutations_of_n,
  * or partial permutation. Here first + 1 = k for the expression simplicity.
  * The formula is easy to understand : for each k (each first) one performs N(N - 1) ... (N - k + 1) operations,
  * and k is going through the range of values from 1 to N (and firstfirst from 0 to N−1).
