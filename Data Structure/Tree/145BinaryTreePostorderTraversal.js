@@ -32,6 +32,7 @@
  *     this.right = (right===undefined ? null : right)
  * }
  */
+
 /**
  * DFS
  * BOTTOM to TOP
@@ -63,4 +64,32 @@ const postorderTraversal = function (root) {
     }
 
     return traversal;
+};
+
+/**
+ * DFS
+ * BOTTOM to TOP
+ * LEFT to RIGHT
+ * @param {TreeNode} root
+ * @return {number[]}
+ * Time Complexity: O(n), where n is number of nodes
+ * Space Complexity: O(n), where n is number of nodes
+ */
+const postorderTraversal = function (root) {
+    const res = [];
+
+    function postorder(node) {
+
+        if (node.left) {
+            postorder(node.left);
+        }
+        if (node.right) {
+            postorder(node.right);
+        }
+        res.push(node.val);
+    }
+    if (root) {
+        postorder(root);
+    }
+    return res;
 };

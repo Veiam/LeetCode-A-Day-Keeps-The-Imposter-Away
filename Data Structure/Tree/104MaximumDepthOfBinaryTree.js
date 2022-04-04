@@ -35,7 +35,7 @@
  * Time Compelxity: O(n), where n is number of nodes
  * Space Complexity: O(logn) if it's balanced O(n) if it's not balanced
  */
-var maxDepth = function (root) {
+const maxDepth = function (root) {
     function traversal(node, depth) {
         if (node) {
             // get depth of left
@@ -49,4 +49,37 @@ var maxDepth = function (root) {
     }
 
     return traversal(root, 0);
+};
+
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ * Time Compelxity: O(n), where n is number of nodes
+ * Space Complexity: O(n), where n is number of nodes
+ */
+const maxDepth = function (root) {
+    const queue = [];
+    let depth = 0;
+
+    if (!root)
+        return 0;
+
+    queue.push(root);
+
+    while (queue.length) {
+        // we only want to go through the current level
+        const len = queue.length;
+        const level = [];
+        for (let i = 0; i < len; i++) {
+            const current = queue.shift();
+            level.push(current.val);
+            if (current.left)
+                queue.push(current.left);
+            if (current.right)
+                queue.push(current.right);
+        }
+        depth++;
+    }
+
+    return depth;
 };

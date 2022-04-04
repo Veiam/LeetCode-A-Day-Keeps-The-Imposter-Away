@@ -52,3 +52,24 @@ const removeElements = function (head, val) {
     }
     return dummy;
 };
+
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ * Time Complexity: O(n), where n is the length of head
+ * Space Complexity: O(1), we only create one extra node
+ */
+const removeElements = function (head, val) {
+    let prevhead = new ListNode(null);
+    prevhead.next = head;
+    let prev = prevhead;
+    while (prevhead) {
+        while (prevhead.next && prevhead.next.val === val) {
+            prevhead.next = prevhead.next.next;
+        }
+        prevhead = prevhead.next;
+    }
+
+    return prev.next;
+};

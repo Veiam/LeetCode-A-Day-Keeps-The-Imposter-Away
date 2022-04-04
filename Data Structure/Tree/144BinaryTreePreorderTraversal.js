@@ -6,6 +6,7 @@
  *     this.right = (right===undefined ? null : right)
  * }
  */
+
 /**
  * DFS
  * TOP to BOTTOM
@@ -13,7 +14,7 @@
  * @param {TreeNode} root
  * @return {number[]}
  * Time Complexity: O(n), where N is the number of nodes
- * Space COmplexity: O(n), where N is the number of nodes
+ * Space Complexity: O(n), where N is the number of nodes
  */
 const preorderTraversal = function (root) {
     const stack = [], traversal = [];
@@ -40,4 +41,31 @@ const preorderTraversal = function (root) {
         }
     }
     return traversal;
+};
+
+/**
+ * DFS
+ * TOP to BOTTOM
+ * LEFT to RIGHT
+ * @param {TreeNode} root
+ * @return {number[]}
+ * Time Complexity: O(n), where N is the number of nodes
+ * Space Complexity: O(n), where N is the number of nodes
+ */
+const preorderTraversal = function (root) {
+    const res = [];
+
+    function preorder(node) {
+        res.push(node.val);
+        if (node.left) {
+            preorder(node.left);
+        }
+        if (node.right) {
+            preorder(node.right);
+        }
+    }
+    if (root) {
+        preorder(root);
+    }
+    return res;
 };

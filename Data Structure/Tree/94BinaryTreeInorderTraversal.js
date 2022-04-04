@@ -63,3 +63,28 @@ const inorderTraversal = function (root) {
 
     return traversal;
 };
+
+/**
+ * DFS LEFT to RIGHT
+ * @param {TreeNode} root
+ * @return {number[]}
+ * Time Complexity: O(n), where n is number of nodes
+ * Space Complexity: O(n), where n is number of nodes
+ */
+const inorderTraversal = function (root) {
+    const res = [];
+
+    function inorder(node) {
+        if (node.left) {
+            inorder(node.left);
+        }
+        res.push(node.val);
+        if (node.right) {
+            inorder(node.right);
+        }
+    }
+    if (root) {
+        inorder(root);
+    }
+    return res;
+};

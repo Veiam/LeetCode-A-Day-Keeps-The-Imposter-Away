@@ -35,3 +35,26 @@ const invertTree = function (root) {
     return root;
 
 };
+
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ * Time Complexity: O(n), where n is number of nodes
+ * Space Complexity: O(n), where n is numer of nodes
+ */
+const invertTree = function (root) {
+    if (!root)
+        return root;
+    function invert(root) {
+        if (root) {
+            [root.left, root.right] = [root.right, root.left];
+        }
+        if (root.left)
+            invert(root.left);
+        if (root.right)
+            invert(root.right);
+    }
+    invert(root);
+
+    return root;
+};

@@ -31,3 +31,21 @@ const hasPathSum = function (root, targetSum) {
 
     return sum(root, 0);
 };
+/**
+ * @param {TreeNode} root
+ * @param {number} targetSum
+ * @return {boolean}
+ * Time Complexity: O(n), wher n is the number of nodes
+ * Space Complexity: O(n) where n is the height of the tree
+ */
+const hasPathSum = function (root, targetSum) {
+    if (!root) {
+        return false;
+    }
+
+    targetSum -= root.val;
+    if (!root.left && !root.right) {
+        return targetSum === 0;
+    }
+    return hasPathSum(root.left, targetSum) || hasPathSum(root.right, targetSum);
+};
