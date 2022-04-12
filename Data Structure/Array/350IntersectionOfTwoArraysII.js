@@ -70,7 +70,7 @@ const intersect = function (nums1, nums2) {
         if (nums1[p1] < nums2[p2]) {
             p1++;
         }
-        // increase p2 if p2 is smallerF
+        // increase p2 if p2 is smaller
         else if (nums1[p1] > nums2[p2]) {
             p2++;
         }

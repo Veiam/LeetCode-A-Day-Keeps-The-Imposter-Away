@@ -52,3 +52,21 @@ const hasCycle = function (head) {
     }
     return false;
 };
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ * Time Complexity: O(N + K), where N is the length of Linked List and K is the length of cycle
+ * Space Complexity: O(N) The space dpends on the number of elemetns added to the has table, which contains at most n elements.
+ */
+ const hasCycle = function (head) {
+    let visited = new Set();
+    while (head !== null) {
+        if (visited.has(head)) {
+            return true;
+        }
+        visited.add(head);
+        head = head.next;
+    }
+    return false;
+};

@@ -31,7 +31,7 @@
  * @param {string} s
  * @return {boolean}
  * Time Complexity: O(n), where n is the length of s
- * Space Complexity: O(n), where n is the length of n
+ * Space Complexity: O(n), where n is the length of n. In worst case we push all opening brackets.
  */
 const isValid = function (s) {
     const stack = [];

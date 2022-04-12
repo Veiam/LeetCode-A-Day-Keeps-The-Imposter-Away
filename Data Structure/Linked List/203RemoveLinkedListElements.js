@@ -61,13 +61,20 @@ const removeElements = function (head, val) {
  * Space Complexity: O(1), we only create one extra node
  */
 const removeElements = function (head, val) {
+    // set up a dummy
     let prevhead = new ListNode(null);
     prevhead.next = head;
+
     let prev = prevhead;
+
+    // while we can traverse
     while (prevhead) {
+        // check if the next val matches the val
         while (prevhead.next && prevhead.next.val === val) {
+            // if so skip it
             prevhead.next = prevhead.next.next;
         }
+        // else move on
         prevhead = prevhead.next;
     }
 
