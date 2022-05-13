@@ -50,4 +50,6 @@ const containsDuplicate = function (nums) {
     // so if their size/length do not match
     // then it means there is a duplicate
     return set.size !== nums.length;
+    // could be one liner
+    // return nums.length !== new Set(nums).size;
 };
