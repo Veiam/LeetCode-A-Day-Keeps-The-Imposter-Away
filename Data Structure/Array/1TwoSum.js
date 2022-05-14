@@ -41,3 +41,24 @@ const twoSum = function (nums, target) {
         map[nums[i]] = i;
     }
 };
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ * Time Complexity: O(n), where n is number of nums.
+ * Space Complexity: O(n), where n is number of nums.
+ */
+const twoSum = function (nums, target) {
+    const map = new Map();
+
+    for (let i = 0; i < nums.length; i++) {
+        // find a required pair
+        const pair = target - nums[i];
+        // if it already exists, then return it
+        if (map.has(pair))
+            return [map.get(pair), i];
+        // if not store it
+        map.set(nums[i], i);
+    }
+};

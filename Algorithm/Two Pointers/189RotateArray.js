@@ -21,6 +21,7 @@
 // 0 <= k <= 105
 
 /**
+ * Cyclic Replacements
  * @param {number[]} nums
  * @param {number} k
  * @return {void} Do not return anything, modify nums in-place instead.
@@ -28,6 +29,7 @@
  * Space complexity: O(1). Constant extra space is used.
  */
 const rotate = function (nums, k) {
+    k = k % nums.length;
     let [start, count] = [0, 0];
     // we only wants to swap nums.length elements
     while (count < nums.length) {
@@ -52,7 +54,7 @@ const rotate = function (nums, k) {
  * @param {number} k
  * @return {void} Do not return anything, modify nums in-place instead.
  * Time complexity: O(n). n elements are reversed a total of two times.
- * Space complexity: O(1. No extra space is used.SS
+ * Space complexity: O(1). No extra space is used.SS
  */
 const rotate = function (nums, k) {
     k %= nums.length;
