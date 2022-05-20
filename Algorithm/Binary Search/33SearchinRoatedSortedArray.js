@@ -27,6 +27,8 @@
  * @param {number[]} nums
  * @param {number} target
  * @return {number}
+ * Time Complexity: O(logn), binary search
+ * Space Complexity: O(1), constant space is used.
  */
 const search = function(nums, target) {
     let begin = 0, end = nums.length - 1;
