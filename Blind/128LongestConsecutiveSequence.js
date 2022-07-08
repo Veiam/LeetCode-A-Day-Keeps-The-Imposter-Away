@@ -21,10 +21,15 @@
  * Space Complexity: O(n), space to stor a new set
  */
 var longestConsecutive = function (nums) {
+    // build a set from nums
     const set = new Set(nums);
     let res = 0;
+
+    // loop through set
     set.forEach(num => {
+        // if num is a sequence starter, meaning there isn't a num-1
         if (!(set.has(num - 1))) {
+            // calculate the streak
             let next = num + 1;
             let streak = 1;
             while (set.has(next)) {

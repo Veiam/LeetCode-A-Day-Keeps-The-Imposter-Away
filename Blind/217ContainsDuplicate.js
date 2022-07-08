@@ -21,13 +21,17 @@
  * @return {boolean}
  * Time/Space: O(n)
  */
- var containsDuplicate = function(nums) {
-    const arr = new Set();
-    for(let num of nums){
-        if(arr.has(num)){
-            return true;
-        }
-        arr.add(num);
-    }
-    return false;
+var containsDuplicate = function (nums) {
+    // build a set from num and compare length
+    const arr = new Set(nums);
+    return nums.length !== arr.size;
+    // above is same thing as below
+    // const arr = new Set();
+    // for(let num of nums){
+    //     if(arr.has(num)){
+    //         return true;
+    //     }
+    //     arr.add(num);
+    // }
+    // return false;
 };

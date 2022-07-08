@@ -21,31 +21,35 @@
  * Time complexity: O(n + m + m), where n is entries of nums and m is count of unique number
  * Space complexity: O(n + m + k), where n is entries of nums and m is count of unique number
  */
- var topKFrequent = function(nums, k) {
-    // Go through each num and get a count
+var topKFrequent = function (nums, k) {
+    // Go through each num and get a count of each number occurence
     const count = {};
-    for(let num of nums){
-        if(!(num in count)){
+    for (let num of nums) {
+        if (!(num in count)) {
             count[num] = 0;
         }
         count[num]++;
     }
-    
-    // Bucket sort freq, key is count and value is a list of num that belongs to that count
+
+    // bucket sort
+    // freq array with nums.length + 1, frequency can be from 0 to nums.length
     let freq = new Array(nums.length + 1).fill([]);
-    for(const [key, value] of Object.entries(count)){
+    // loop through map saved above
+    for (const [key, value] of Object.entries(count)) {
+        // key is count and value is a list of num that belongs to that count
+        // add the value to the existing frequency
         freq[value] = [...freq[value], key];
     }
-    
+
     // Now loop from the top and fill in until we have k amount
     const res = [];
-    for(let i = nums.length; i >= 0; i--){
-        if(freq[i]){
-            for(let num of freq[i]){
+    for (let i = nums.length; i >= 0; i--) {
+        if (freq[i]) {
+            for (let num of freq[i]) {
                 res.push(num);
             }
         }
-        if(res.length === k){
+        if (res.length === k) {
             return res;
         }
     }

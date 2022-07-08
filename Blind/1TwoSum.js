@@ -28,15 +28,19 @@
  * @return {number[]}
  * Time/Space Complexity: O(n)
  */
- var twoSum = function(nums, target) {
+var twoSum = function (nums, target) {
     const map = {};
-    
-    for(let i = 0; i < nums.length; i++){
+
+    // loop through num
+    for (let i = 0; i < nums.length; i++) {
         const num = nums[i];
+        // calculate the needed pair
         const pair = target - num;
-        if(pair in map){
+        // if pair is found, then return
+        if (pair in map) {
             return [map[pair], i];
         }
+        // if not, store the current num
         map[num] = i;
     }
 };

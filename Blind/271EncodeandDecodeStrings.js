@@ -36,6 +36,7 @@
  * Space Complexity: O(1)
  */
 var encode = function (strs) {
+    // turn list of strings to a single string with non ASCII characters
     return strs.join(String.fromCharCode(257));
 };
 
@@ -48,6 +49,7 @@ var encode = function (strs) {
  * Space Complexity: O(1)
  */
 var decode = function (s) {
+    // turn single string into a list of strings, identified by non ASCII characters
     return s.split(String.fromCharCode(257));
 };
 
@@ -66,9 +68,12 @@ var decode = function (s) {
  */
 var encode = function (strs) {
     let res = "";
+    // loop through strings
     for (let str of strs) {
-        const length = str.length;
-        res += length + "#" + str;
+        // string will be encoded to this format
+        // length of string + special char + string
+        // special char acts as a divider between length and string
+        res += str.length + "#" + str;
     }
     return res;
 };
@@ -84,14 +89,19 @@ var encode = function (strs) {
 var decode = function (s) {
     const res = [];
     let i = 0;
-    while( i < s.length){
+    // loop through string
+    while (i < s.length) {
         let num = "";
+        // string will begin with numbers for length until it meets the divider #
         while (s[i] != "#") {
             num += s[i];
             i++;
         }
+        // get length
         num = parseInt(num);
+        // push the string to result
         res.push(s.substring(i + 1, i + 1 + num));
+        // move the pointer
         i = i + 1 + num;
     }
 

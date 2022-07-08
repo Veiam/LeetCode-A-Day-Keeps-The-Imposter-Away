@@ -22,16 +22,24 @@
  * Time Complexity: O(n), go through the nums twice
  * Space Complexity: O(1), res does not count toward space complexity, so we use constant space
  */
- var productExceptSelf = function(nums) {
-    let res = new Array(nums.length).fill(0);
-    for(let i = 1; i < nums.length; i++){
-        res[i] = nums[i-1] * res[i-1];
+var productExceptSelf = function (nums) {
+    // build a result array with nums.length
+    let res = new Array(nums.length).fill(1);
+    // productExceptSelf is product of all divided by itself
+    // since we can't use division, we have to find pre-product and post-product
+    // loop from second element since pre-product of first element is 1
+    for (let i = 1; i < nums.length; i++) {
+        res[i] = nums[i - 1] * res[i - 1];
     }
-    
-    let postFix = 1;
-    for(let i = nums.length-2; i >= 0; i--){
-        postFix *= nums[i+1];
-        res[i] = postFix * res[i];
+
+    // need to keep track of post-product outside of loop
+    let post = 1;
+    // loop from second to last since post-product of last element is 1
+    for (let i = nums.length - 2; i >= 0; i--) {
+        // calculate post product
+        post *= nums[i + 1];
+        // pre * pro = product except self
+        res[i] *= post;
     }
 
     return res;

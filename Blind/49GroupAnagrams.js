@@ -24,22 +24,28 @@
  * Time Complexity: O(m*n), time to go through each letter in each string
  * Space Complexity: O(n), space to store each string in group in object
  */
- var groupAnagrams = function(strs) {
+var groupAnagrams = function (strs) {
     const res = {};
-    
-    for( let s of strs){
-        let count = new Array(26).fill(0);
-        for(let i = 0; i < s.length; i++){
-            count[s.charCodeAt(i) - "a".charCodeAt(0)]++;
+
+    // loop through each string
+    for (let s of strs) {
+        // build a array of 26, representing each alphabet
+        let freq = new Array(26).fill(0);
+        // go through each char in string
+        for (let i = 0; i < s.length; i++) {
+            // increase the frequency count
+            freq[s.charCodeAt(i) - "a".charCodeAt(0)]++;
         }
-        if(count in res){
-            res[count] = [...res[count], s];
+        // if freq already exists, append it
+        if (freq in res) {
+            res[freq] = [...res[freq], s];
         }
-        else{
-            res[count] = [s];
+        else {
+            res[freq] = [s];
         }
     }
-    
+
+    // return the stored values
     return Object.values(res);
-    
+
 };
