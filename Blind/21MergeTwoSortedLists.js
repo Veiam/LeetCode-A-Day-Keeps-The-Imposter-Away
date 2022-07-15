@@ -31,7 +31,7 @@
  * @param {ListNode} list2
  * @return {ListNode}
  * Time complexity: O(n+m), loop through both list
- * Spcae complexity: O(1), constant space for pointers or O(n+m) for new ListNode.
+ * Spcae complexity: O(1), constant space for pointers.
  */
 var mergeTwoLists = function (list1, list2) {
     // check if one is empty
