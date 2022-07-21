@@ -57,3 +57,31 @@ var mergeTwoLists = function (list1, list2) {
     res.next = list1 === null ? list2 : list1;
     return dummy.next;
 };
+
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ * Time and space complexity: O(n + m), we visit each node and recursion stack
+ */
+var mergeTwoLists = function (list1, list2) {
+    // if one of them is null, then return non-null one
+    if (!list1 || !list2) {
+        return list1 === null ? list2 : list1;
+    }
+
+    // if list1 node is less or equal
+    if (list1.val <= list2.val) {
+        // we set the list1 node next to either current list1 next or from list2
+        list1.next = mergeTwoLists(list1.next, list2);
+        // return modified list1
+        return list1;
+    }
+    // if list2 node is less
+    else {
+        // we set the list2 node next to either from list1 or current list2 next
+        list2.next = mergeTwoLists(list1, list2.next);
+        // return modified list2
+        return list2;
+    }
+};

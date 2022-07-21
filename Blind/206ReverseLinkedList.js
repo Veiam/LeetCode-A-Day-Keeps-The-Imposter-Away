@@ -39,3 +39,23 @@ var reverseList = function (head) {
     }
     return prev;
 };
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ * Time and space complexity: O(n), we touch each node and recursion stack
+ */
+var reverseList = function (head) {
+    // reached the end of the list
+    if (!head || !head.next) {
+        return head;
+    }
+
+    node = reverseList(head.next);
+    // set the next node's next to current one, so reversing it
+    head.next.next = head;
+    // set the next to null to avoid cycle, cut ties with next node
+    head.next = null;
+    // return reversed node
+    return node;
+};
