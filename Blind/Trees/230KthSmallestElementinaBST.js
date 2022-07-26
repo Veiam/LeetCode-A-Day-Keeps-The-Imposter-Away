@@ -48,3 +48,33 @@ var kthSmallest = function (root, k) {
     helper(root);
     return res[k - 1];
 };
+
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ * Time complexity: O(H + k), H is a tree height and k are number of elements.
+ * Space complexity: O(H), to keep the stack where H is a tree height
+ */
+var kthSmallest = function (root, k) {
+    const stack = [];
+    const res = [];
+    while (stack.length || root) {
+        // in order traversal
+        while (root) {
+            stack.push(root);
+            root = root.left;
+        }
+
+        root = stack.pop();
+        res.push(root.val);
+        k--;
+
+        // we are at the limit
+        if (k === 0) {
+            return res[k - 1];
+        }
+
+        root = root.right;
+    }
+};
