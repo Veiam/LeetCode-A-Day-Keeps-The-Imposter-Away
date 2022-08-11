@@ -61,3 +61,59 @@ var pacificAtlantic = function (heights) {
 
     return res;
 };
+
+/**
+ * BFS
+ * @param {number[][]} heights
+ * @return {number[][]}
+ * Time Compleixty: O(r * c)
+ * Space Complexity: O(r * c)
+ */
+var pacificAtlantic = function (heights) {
+    const rows = heights.length, cols = heights[0].length;
+
+    const atlQueue = [], pacQueue = [];
+    for (let i = 0; i < rows; i++) {
+        pacQueue.push([i, 0]);
+        atlQueue.push([i, cols - 1]);
+    }
+
+    for (let j = 0; j < cols; j++) {
+        pacQueue.push([0, j]);
+        atlQueue.push([rows - 1, j]);
+    }
+
+    const atl = bfs(pacQueue);
+    const pac = bfs(atlQueue);
+
+
+    function bfs(queue) {
+        const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+        const visited = new Array(rows).fill().map(() => new Array(cols).fill(false));
+        while (queue.length) {
+            const [r, c] = queue.shift()
+            visited[r][c] = true
+            for (const [x, y] of directions) {
+                const newR = x + r;
+                const newC = y + c;
+                if (newR < 0 || newC < 0 || newR === rows || newC === cols || visited[newR][newC])
+                    continue;
+                if (heights[newR][newC] >= heights[r][c]) {
+                    queue.push([newR, newC]);
+                }
+            }
+        }
+        return visited;
+    }
+
+    const res = [];
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (atl[i][j] && pac[i][j]) {
+                res.push([i, j]);
+            }
+        }
+    }
+
+    return res;
+};
