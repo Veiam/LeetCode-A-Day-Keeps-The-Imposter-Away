@@ -59,17 +59,21 @@ var cloneGraph = function (node) {
         if (!node)
             return null;
 
+        // Set up a new node
         visited[node.val] = new Node(node.val, []);
+        // Loop through neighbor
         for (const neighbor of node.neighbors) {
+            // If not visited, then dfs it
             if (!visited[neighbor.val]) {
                 dfs(neighbor);
             }
 
+            // Add the neighbors
             visited[node.val].neighbors.push(visited[neighbor.val]);
         }
 
+        // Return a node
         return visited[node.val];
-
     }
 
     return dfs(node);
@@ -83,22 +87,24 @@ var cloneGraph = function (node) {
  * Space Compleixty: O(n + w), where n is nodes in visited and w is width of graph
  */
 var cloneGraph = function (node) {
-    const map = {};
-
     if (node === null) {
         return node;
     }
 
+    // Intialize queue and map
+    const map = {};
     const queue = [node];
     map[node.val] = new Node(node.val);
     while (queue.length) {
         const orig = queue.shift();
-
+        // Loop through neighbors
         for (let neighbor of orig.neighbors) {
+            // If not visited
             if (!map[neighbor.val]) {
                 map[neighbor.val] = new Node(neighbor.val, []);
                 queue.push(neighbor);
             }
+            // Set the neighbors
             map[orig.val].neighbors.push(map[neighbor.val]);
         }
     }

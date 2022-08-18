@@ -27,22 +27,27 @@ var pacificAtlantic = function (heights) {
     const atl = {}, pac = {};
     const rows = heights.length, cols = heights[0].length;
     const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+
+    // dfs left and bottom edges
     for (let i = 0; i < rows; i++) {
         dfs(i, 0, pac, heights[i][0]);
         dfs(i, cols - 1, atl, heights[i][cols - 1]);
     }
 
+    // dfs right and top edges
     for (let j = 0; j < cols; j++) {
         dfs(0, j, pac, heights[0][j]);
         dfs(rows - 1, j, atl, heights[rows - 1][j]);
     }
 
+    // check if neighboring cells can flow to current cell
     function dfs(r, c, visited, prevHeight) {
         const coord = r * cols + c;
         if (visited[coord] || r < 0 || c < 0 || r === rows || c === cols || heights[r][c] < prevHeight) {
             return;
         }
         visited[coord] = [r, c];
+        // Check all directions
         for (const [x, y] of dirs) {
             dfs(r + x, y + c, visited, heights[r][c]);
         }
@@ -50,6 +55,7 @@ var pacificAtlantic = function (heights) {
     }
 
     const res = [];
+    // if it's present in both map, then add it to the res
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             const coord = i * cols + j;

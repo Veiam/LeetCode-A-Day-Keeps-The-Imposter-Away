@@ -38,8 +38,10 @@ var numIslands = function (grid) {
     let res = 0;
     for (let r = 0; r < gridRows; r++) {
         for (let c = 0; c < gridCols; c++) {
+            // if it's a land, recursively look
             if (grid[r][c] === '1') {
                 look(r, c);
+                // increase the land count
                 res++;
             }
         }
@@ -47,15 +49,19 @@ var numIslands = function (grid) {
 
 
     function look(row, col) {
+        // valid cell check
         if (row === gridRows || col === gridCols || row < 0 || col < 0) {
             return;
         }
+        // valid land check
         if (grid[row][col] === '0') {
             return;
         }
 
+        // update the cell so it is marked as visited
         grid[row][col] = '0';
 
+        // look at 4 dirs
         for (const [x, y] of dirs) {
             look(row + x, col + y);
         }
@@ -79,10 +85,13 @@ var numIslands = function (grid) {
         for (let c = 0; c < gridCols; c++) {
             if (grid[r][c] === '1') {
                 grid[r][c] = '0';
+                // Add to queue
                 const queue = [r * gridCols + c];
                 res++;
+                // BFS
                 while (queue.length) {
                     const coords = queue.shift();
+                    // Calculate row and col
                     const row = Math.floor(coords / gridCols);
                     const col = coords % gridCols;
                     if (row - 1 >= 0 && grid[row - 1][col] == '1') {

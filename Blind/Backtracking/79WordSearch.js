@@ -27,7 +27,7 @@
  * @param {string} word
  * @return {boolean}
  * Time complexity: O(N * 3 ^ L), n is number of cells and l is the length of word
- * Space complexity: O(L), we need to recursion up to length of wor
+ * Space complexity: O(L), we need to recursion up to length of word
  */
 var exist = function (board, word) {
     const rows = board.length;
@@ -36,15 +36,19 @@ var exist = function (board, word) {
 
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
+            // back track with row, col, and string
             if (backtrack(r, c, word))
                 return true;
         }
     }
     return false;
+
     function backtrack(row, col, remain) {
+        // if there is nothing remaining
         if (remain === '') {
             return true;
         }
+        // invalid cell
         if (row < 0 || col < 0 || row == rows || col == cols) {
             return false;
         }

@@ -33,6 +33,7 @@ var canFinish = function (numCourses, prerequisites) {
     const list = {};
     const checked = {};
 
+    // Build a map of one way dependencies
     for (const [x, y] of prerequisites) {
         if (!list[x]) {
             list[x] = [];
@@ -48,18 +49,22 @@ var canFinish = function (numCourses, prerequisites) {
     return true;
 
     function dfs(key, path) {
+        // if visited already, there is a cycle
         if (path[key]) {
             return true;
         }
 
+        // if there is no dependency or already chcked
         if (!list[key] || checked[key]) {
             return false;
         }
 
+        // backtrack
         path[key] = true;
         checked[key] = true;
 
         let ret = false;
+        // loop through dependencies
         for (const req of list[key]) {
             ret = dfs(req, path);
             if (ret) {
@@ -84,6 +89,7 @@ var canFinish = function (numCourses, prerequisites) {
 var canFinish = function (numCourses, prerequisites) {
     const graph = {};
     let totalDeps = 0;
+    // Build a map of dependencies
     for (const [next, prev] of prerequisites) {
         if (!graph[prev]) {
             graph[prev] = [[], 0];
@@ -92,12 +98,14 @@ var canFinish = function (numCourses, prerequisites) {
         if (!graph[next]) {
             graph[next] = [[], 0];
         }
+        // keep track of number of prereq required
         graph[next][1]++;
+        // keep track of total number of dependencies
         totalDeps++;
     }
 
     const nodepCourses = [];
-    // start from coursee that have no prerequ
+    // start from coursee that have no prereq
     for (const key of Object.keys(graph)) {
         if (graph[key][1] == 0) {
             nodepCourses.push(key);
@@ -108,16 +116,18 @@ var canFinish = function (numCourses, prerequisites) {
 
     while (nodepCourses.length) {
         const course = nodepCourses.pop();
-
+        // loop through its prereq
         for (let nextCourse of graph[course][0]) {
             graph[nextCourse][1]--;
             removedEdges++;
+            // if prereq also has 0 dependency, then add it to the map
             if (graph[nextCourse][1] == 0) {
                 nodepCourses.push(nextCourse);
             }
         }
     }
 
+    // if removed edges are equal to total dependencies
     if (removedEdges == totalDeps) {
         return true;
     }

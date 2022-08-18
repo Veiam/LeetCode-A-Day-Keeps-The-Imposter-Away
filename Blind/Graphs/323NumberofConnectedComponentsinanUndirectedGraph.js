@@ -26,8 +26,10 @@
  * Space Complexity: O(n+m) where n is the number of edges, and m is the number of vertices.
  */
 var countComponents = function (n, edges) {
+    // initialize a map
     const map = {};
 
+    // loop through edges and create an adjacent list
     for (const [x, y] of edges) {
         if (map[x] == null) {
             map[x] = [];
@@ -39,12 +41,17 @@ var countComponents = function (n, edges) {
         map[y].push(x);
     }
 
+    // keep track of visited node and count
     let count = 0;
     const visited = new Array(n).fill(0);
+
+    // loop through each node
     for (let i = 0; i < n; i++) {
+        // if we don't have in a map then it's by itself
         if (map[i] == null) {
             count++;
         }
+        // if it has not been visited, dfs and increase the count
         else if (visited[i] === 0) {
             dfs(i);
             count++;
@@ -52,12 +59,16 @@ var countComponents = function (n, edges) {
     }
 
     function dfs(node) {
+        // update the vistied status
         visited[node] = 1;
+        // loop through the adjacents
         for (let key of map[node]) {
+            // recursively dfs only if it has not been visited yet
             if (visited[key] === 0)
                 dfs(key);
         }
-
     }
+
+    // return the count
     return count;
 };
