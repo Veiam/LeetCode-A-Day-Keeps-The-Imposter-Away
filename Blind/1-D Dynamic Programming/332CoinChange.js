@@ -72,6 +72,8 @@ var coinChange = function (coins, amount) {
  * @param {number[]} coins
  * @param {number} amount
  * @return {number}
+ * Time complexity: O(n * m), where n is amount and m is number of coins
+ * Space complexity: O(n)
  */
 var coinChange = function (coins, amount) {
     const dp = new Array(amount + 1).fill(amount + 1);

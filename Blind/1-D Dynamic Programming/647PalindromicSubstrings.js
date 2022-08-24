@@ -20,7 +20,7 @@
  * @param {string} s
  * @return {number}
  * Time complexity: O(n^2), we check each letter and expand out
- * Space complexity: O(n), recursive stack
+ * Space complexity: O(1), constant space is used
  */
 var countSubstrings = function (s) {
     let counter = 0;
