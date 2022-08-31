@@ -41,5 +41,5 @@ var maxProduct = function (nums) {
         res = Math.max(res, curMax);
     }
 
-    return max;
+    return res;
 }

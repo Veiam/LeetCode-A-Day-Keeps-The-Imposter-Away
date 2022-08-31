@@ -36,7 +36,7 @@ var wordBreak = function (s, wordDict) {
     let dp = new Array(s.length + 1).fill(false);
     dp[s.length] = true;
 
-    // loop from 
+    // loop from back
     for (let i = s.length - 1; i >= 0; i--) {
         // loop through words
         for (let word of wordDict) {
