@@ -13,7 +13,7 @@
 // intervals[i].length == 2
 // 0 <= starti < endi <= 106
 
-/**
+/**`
  * @param {number[][]} intervals
  * @return {boolean}
  * Time Complexity: O(nlogn), sort then loop through
@@ -21,7 +21,7 @@
  */
 var canAttendMeetings = function (intervals) {
     // sort by start time
-    intervals = intervals.sort((a, b) => a[0] - b[0]);
+    intervals.sort((a, b) => a[0] - b[0]);
     // loop through
     for (let i = 1; i < intervals.length; i++) {
         // if previous end time is after current start time then we can't attend
