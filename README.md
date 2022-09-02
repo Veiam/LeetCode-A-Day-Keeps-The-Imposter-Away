@@ -1,7 +1,7 @@
 # LeetCode-A-Day-Keeps-The-Imposter-Away
 
 ## Blind
-Curated List of Top 75 LeetCode Questions
+Folder for Blind 75 + NeetCode 150 + Grind 169
 
 ## Plans
 https://leetcode.com/study-plan/
