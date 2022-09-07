@@ -51,7 +51,7 @@ var dailyTemperatures = function (temperatures) {
     let res = new Array(len).fill(0);
     for (let cur = len - 2; cur >= 0; cur--) {
         let temp = temperatures[cur];
-        // moving frmo back, if it's the new hottest then it will be 0
+        // moving from back, if it's the new hottest then it will be 0
         if (temp >= hottest) {
             hottest = temp;
             continue;
