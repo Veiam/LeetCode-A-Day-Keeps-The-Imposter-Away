@@ -13,23 +13,31 @@
 /**
  * @param {number[]} heights
  * @return {number}
+ * Time Complexity: O(n), we iterate each index twice at max
+ * Space Complexity: O(n), stack size
  */
 var largestRectangleArea = function (heights) {
     let largestArea = 0;
     let stack = [];
 
+    // loop through
     for (let i = 0; i < heights.length; i++) {
         let start = i;
 
+        // if stack is not empty and most recent height is taller than current height
         while (stack.length > 0 && stack[stack.length - 1][1] > heights[i]) {
+            // get the last index and height
             let [lastI, lastH] = stack.pop();
+            // calculate largest area
             largestArea = Math.max(largestArea, lastH * (i - lastI));
+            // we can start from last index with current height
             start = lastI;
         }
 
         stack.push([start, heights[i]]);
     }
 
+    // take care of remainings in stack
     for (let j = 0; j < stack.length; j++) {
         let currArea = stack[j][1] * (heights.length - stack[j][0]);
         largestArea = Math.max(largestArea, currArea);
