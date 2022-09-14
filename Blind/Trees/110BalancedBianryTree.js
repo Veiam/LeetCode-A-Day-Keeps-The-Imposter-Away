@@ -34,19 +34,47 @@
  * Space complexity: O(n), recursion stack
  */
 var isBalanced = function (root) {
-    function getHeight(node) {
-        // if it's empty node then there is no height
-        if (!node) {
-            return [0, true];
-        }
-
-        // recursively get height and balance
-        const [leftHeight, leftBalanced] = getHeight(node.left);
-        const [rightHeight, rightBalanced] = getHeight(node.right);
-
-        // [maxHeight of eitehr path + node, left and right height different must be less than 2]
-        return [Math.max(leftHeight, rightHeight) + 1, Math.abs(leftHeight - rightHeight) < 2 && leftBalanced && rightBalanced];
+    // if root is empty then its balanced
+    if (!root) {
+        return true;
     }
 
-    return getHeight(root)[1];
+    // check if left and right is balanced
+    return Math.abs(traverse(root.left) - traverse(root.right)) < 2 && isBalanced(root.left) && isBalanced(root.right);
+};
+
+function traverse(head) {
+    // if head is empty then height is 0
+    if (!head) {
+        return 0;
+    }
+
+    // calculate the height recurisvely
+    return Math.max(traverse(head.left), traverse(head.right)) + 1;
+}
+
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ * Time complexity: O(n), bottom-up recursion
+ * Space complexity: O(n). recursino stack
+ */
+var isBalanced = function (root) {
+    const getHeight = (root) => {
+        if (!root) return [0, true];
+
+        const [leftHeight, leftBalanced] = getHeight(root.left);
+        const [rightHeight, rightBalanced] = getHeight(root.right);
+
+        const balanced =
+            leftBalanced &&
+            rightBalanced &&
+            Math.abs(leftHeight - rightHeight) < 2;
+
+        return [1 + Math.max(leftHeight, rightHeight), balanced];
+    };
+
+    const balanced = getHeight(root)[1];
+
+    return balanced;
 };
