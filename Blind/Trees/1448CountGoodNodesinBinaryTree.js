@@ -63,3 +63,34 @@ var goodNodes = function (root) {
 
     return res;
 };
+
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ * Time complexity: O(n), we vist each node once
+ * Space complexity: O(n), queue size
+ */
+var goodNodes = function (root) {
+    let res = 0;
+    const queue = [[root, root.val]];
+
+    while (queue.length) {
+        let [node, max] = queue.pop();
+
+        // see if current node is a good node
+        if (max <= node.val) {
+            res++;
+        }
+
+        max = Math.max(max, node.val);
+        if (node.left) {
+            queue.push([node.left, Math.max(max, node.val)]);
+        }
+
+        if (node.right) {
+            queue.push([node.right, Math.max(max, node.val)]);
+        }
+    }
+
+    return res;
+};

@@ -32,6 +32,8 @@
  *     this.right = (right===undefined ? null : right)
  * }
  */
+
+
 /**
  * @param {TreeNode} root
  * @return {number[]}
@@ -65,6 +67,33 @@ var rightSideView = function (root) {
         }
         res.push(farRight);
     }
+
+    return res;
+};
+
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ * Time complexity: O(n), we vist each node once
+ * Space compleity: O(n), recursive stack
+ */
+var rightSideView = function (root) {
+    const res = [];
+
+    function helper(node, level) {
+        if (!node) {
+            return;
+        }
+
+        if (res[level] == null) {
+            res[level] = node.val;
+        }
+
+        helper(node.right, level + 1);
+        helper(node.left, level + 1);
+    }
+
+    helper(root, 0);
 
     return res;
 };
