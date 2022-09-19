@@ -24,6 +24,26 @@
  * @param {number[][]} points
  * @param {number} k
  * @return {number[][]}
+ * Time: O(nlogn)
+ * Space: O(n)
+ */
+var kClosest = function (points, k) {
+    // Sort the array with a custom lambda comparator function
+    points.sort((a, b) => squaredDistance(a) - squaredDistance(b));
+
+    // Return the first k elements of the sorted array
+    return points.slice(0, k);
+};
+
+// Calculate and return the squared Euclidean distance
+const squaredDistance = ([x, y]) => x ** 2 + y ** 2;
+
+/**
+ * @param {number[][]} points
+ * @param {number} k
+ * @return {number[][]}
+ * Time: O(nlogk)
+ * Space: O(k)
  */
 var kClosest = function (points, k) {
     let heap = new Heap(points);
@@ -95,3 +115,103 @@ class Heap {
         return res;
     }
 }
+
+/**
+ * @param {number[][]} points
+ * @param {number} k
+ * @return {number[][]}
+ * Time: O(n) average, O(n^2) worst
+ * Space: O(1)
+ */
+var kClosest = function (points, k) {
+    function getDistance(point) {
+        let [x, y] = point;
+        return (x * x + y * y);
+    }
+    function quickselect(l, r) {
+        let pivot = getDistance(points[r]);
+        let pIndex = l;
+        let index = l;
+
+        while (l < r) {
+            let left = getDistance(points[l]);
+            if (left <= pivot) {
+                [points[l], points[pIndex]] = [points[pIndex], points[l]];
+                pIndex++;
+            }
+            l++;
+        }
+        [points[r], points[pIndex]] = [points[pIndex], points[r]];
+        if (pIndex === k - 1) {
+            return points.slice(0, k);
+        }
+        else if (pIndex > k - 1) {
+            return quickselect(index, pIndex - 1);
+        }
+        else {
+            return quickselect(pIndex + 1, r);
+        }
+
+    }
+
+    return quickselect(0, points.length - 1);
+};
+
+/**
+ * @param {number[][]} points
+ * @param {number} k
+ * @return {number[][]}
+ * Time: O(n)
+ * Space: O(n)
+ */
+var kClosest = function (points, k) {
+    // Precompute the Euclidean distance for each point
+    let distances = points.map(euclideanDistance);
+    // Create a reference array of point indices
+    let remaining = points.map((_, i) => i);
+    // Define the initial binary search range
+    let low = 0,
+        high = Math.max(...distances);
+
+    // Perform a binary search of the distances
+    // to find the k closest points
+    let closest = [];
+    while (k) {
+        let mid = low + (high - low) / 2;
+        let [closer, farther] = splitDistances(remaining, distances, mid);
+        if (closer.length > k) {
+            // If more than k points are in the closer distances
+            // then discard the farther points and continue
+            remaining = closer;
+            high = mid;
+        } else {
+            // Add the closer points to the answer array and keep
+            // searching the farther distances for the remaining points
+            k -= closer.length;
+            closest.push(...closer);
+            remaining = farther;
+            low = mid;
+        }
+    }
+
+    // Return the k closest points using the reference indices
+    return closest.map((i) => points[i]);
+};
+
+var splitDistances = function (remaining, distances, mid) {
+    // Split the distances around the midpoint
+    // and return them in separate arrays
+    let closer = [],
+        farther = [];
+    for (let index of remaining) {
+        if (distances[index] <= mid) {
+            closer.push(index);
+        } else {
+            farther.push(index);
+        }
+    }
+    return [closer, farther];
+};
+
+// Calculate and return the squared Euclidean distance
+const euclideanDistance = ([x, y]) => x ** 2 + y ** 2;

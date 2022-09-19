@@ -51,6 +51,7 @@ class Heap {
         return this.heap[0];
     }
 
+    // move an element that is not properly positioned up the tree
     siftUp(pos) {
         let k = (pos - 1) >> 1;
         while (pos > 0 && this.heap[pos] < this.heap[k]) {
@@ -60,6 +61,7 @@ class Heap {
         }
     }
 
+    // move an element that is not properly positioend down thre tree
     siftDown(pos) {
         let k = pos * 2 + 1;
         while (k < this.length) {
@@ -77,3 +79,44 @@ class Heap {
         }
     }
 }
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ * Time: O(n) average, O(n^2) worst
+ * Space: O(1)
+ */
+var findKthLargest = function (nums, k) {
+    k = nums.length - k;
+
+    function quickSelect(l, r) {
+        let pivot = nums[r];
+        let pIndex = l;
+        let index = l;
+        while (l < r) {
+            const left = nums[l];
+
+            if (left <= pivot) {
+                [nums[pIndex], nums[l]] = [nums[l], nums[pIndex]];
+                pIndex++;
+            }
+            l++;
+        }
+        [nums[pIndex], nums[r]] = [nums[r], nums[pIndex]];
+
+        if (pIndex === k) {
+            return nums[k];
+        }
+        else if (pIndex < k) {
+            return quickSelect(pIndex + 1, r);
+        }
+        else {
+            return quickSelect(index, pIndex - 1);
+        }
+    }
+
+    return quickSelect(0, nums.length - 1);
+};
+
+

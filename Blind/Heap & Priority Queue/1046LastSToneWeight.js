@@ -148,3 +148,57 @@ class Heap {
         return this.heap[0];
     }
 }
+
+/**
+ * Bucket Sort
+ * @param {number[]} stones
+ * @return {number}
+ * Time complexity: O(N + W), number of stones + size of bucket
+ * Space complexity: O(W), size of bucket
+ */
+var lastStoneWeight = function (stones) {
+
+    let bucket = [];
+    let maxWeight = 0;
+    // create a bucket and keep track of max weight
+    for (let stone of stones) {
+        bucket[stone] = bucket[stone] + 1 || 1;
+        maxWeight = Math.max(maxWeight, stone);
+    }
+
+    let biggestWeight = 0;
+    let currentWeight = maxWeight;
+
+    while (currentWeight > 0) {
+        // if there is no stone for current index
+        if (!bucket[currentWeight]) {
+            currentWeight--;
+        }
+        // if current biggest weight is 0 and current index has stones
+        else if (biggestWeight === 0) {
+            // divied by 2
+            bucket[currentWeight] %= 2;
+            // if there is 1 left then it will be a biggest ewight
+            if (bucket[currentWeight] === 1) {
+                biggestWeight = currentWeight;
+            }
+            currentWeight--;
+        }
+        else {
+            // reduce the current index's stone count
+            bucket[currentWeight]--;
+            // if the differenec is less than or eqaul to current weight
+            if (biggestWeight - currentWeight <= currentWeight) {
+                // increase the stone count of difference index
+                bucket[biggestWeight - currentWeight] = bucket[biggestWeight - currentWeight] + 1 || 1;
+                // we will need to find a ne biggest weight
+                biggestWeight = 0;
+            }
+            else {
+                // reduce the current biggest eight
+                biggestWeight -= currentWeight;
+            }
+        }
+    }
+    return biggestWeight;
+};
