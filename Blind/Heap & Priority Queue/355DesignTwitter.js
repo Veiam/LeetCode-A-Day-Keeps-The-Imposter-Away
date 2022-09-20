@@ -155,3 +155,49 @@ Twitter.prototype.unfollow = function (followerId, followeeId) {
  * obj.follow(followerId,followeeId)
  * obj.unfollow(followerId,followeeId)
  */
+
+class Twitter {
+    constructor() {
+        this.tweets = [];
+        this.following = new Map();
+    }
+
+    postTweet(userId, tweetId, { tweets } = this) {
+        // push it to array as an object
+        tweets.push({ authorId: userId, id: tweetId });
+    }
+
+    getNewsFeed(userId, newsIDs = [], { tweets, following } = this) {
+        // loop through tweets from latest and get maximum of 10 tweets
+        for (let i = tweets.length - 1; i >= 0 && newsIDs.length < 10; i--) {
+            const tweet = tweets[i];
+            // check if the current tweet is authored by the user
+            const isAuthor = tweet.authorId === userId;
+            // check if the following exists, then check if the userId exists
+            // then check if the tweet is by someone user follows
+            const isFollowing = following?.get(userId)?.has(tweet.authorId);
+            const canAddTweet = isAuthor || isFollowing;
+            // if eitehr then push
+            if (canAddTweet) {
+                newsIDs.push(tweet.id);
+            }
+        }
+
+        return newsIDs;
+    }
+
+    follow(followerId, followeeId, { following } = this) {
+        // if following is null then create a new one
+        if (!following.has(followerId)) {
+            following.set(followerId, newSet());
+        }
+        // add to the set
+        following.get(followerId).add(followeeId);
+    }
+
+    unfollow(followerId, followeeId, { following } = this) {
+        if (following.has(followerId)) {
+            following.get(followerId).delete(followeeId);
+        }
+    }
+}
