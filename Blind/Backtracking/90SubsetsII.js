@@ -35,3 +35,33 @@ var subsetsWithDup = function (nums) {
     }
     return res;
 };
+
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ * Time: O(nlogn + n*2^n)
+ * Space: O(n), recursion stack
+ */
+var subsetsWithDup = function (nums) {
+    nums.sort((a, b) => a - b);
+    const results = [];
+    const result = [];
+
+    function backtrack(index = 0) {
+        results.push(result.slice());
+
+        for (let i = index; i < nums.length; i++) {
+            // if we already visited previous num in this loop, then skip
+            if (i !== index && nums[i] === nums[i - 1]) {
+                continue;
+            }
+            result.push(nums[i]);
+            // backtrack
+            backtrack(i + 1);
+            result.pop();
+        }
+    }
+
+    backtrack();
+    return results;
+};
