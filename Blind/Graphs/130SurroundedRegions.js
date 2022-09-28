@@ -67,3 +67,54 @@ var solve = function (board) {
         }
     }
 };
+
+/**
+ * @param {character[][]} board
+ * @return {void} Do not return anything, modify board in-place instead.
+ * Time and Space: O(r * c)
+ */
+var solve = function (board) {
+    const dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+    for (let r = 0; r < board.length; r++) {
+        if (board[r][0] === "O") {
+            bfs(r, 0);
+        }
+        if (board[r][board[0].length - 1] === "O") {
+            bfs(r, board[0].length - 1);
+        }
+    }
+
+    for (let c = 0; c < board[0].length; c++) {
+        if (board[0][c] === "O") {
+            bfs(0, c);
+        }
+        if (board[board.length - 1][c] === "O") {
+            bfs(board.length - 1, c);
+        }
+    }
+
+    function bfs(r, c) {
+        const queue = [[r, c]];
+
+        while (queue.length) {
+            const [x, y] = queue.shift();
+            if (x < 0 || y < 0 || x >= board.length || y >= board[0].length || board[x][y] !== "O") {
+                continue;
+            }
+            board[x][y] = "V";
+            for (let [dX, dY] of dirs) {
+                queue.push([x + dX, y + dY]);
+            }
+        }
+    }
+
+    for (let r = 0; r < board.length; r++) {
+        for (let c = 0; c < board[0].length; c++) {
+            if (board[r][c] !== "V") {
+                board[r][c] = "X";
+            } else {
+                board[r][c] = "O"
+            }
+        }
+    }
+};
