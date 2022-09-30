@@ -29,19 +29,25 @@
  * BFS
  * @param {number[][]} grid
  * @return {number}
- * Time and Space: O(N)
+ * Time and Space: O(N), where N is the size of grid. BFS with queue.
  */
 var orangesRotting = function (grid) {
     const searchGrid = (grid, orangeCount = 0, queue = []) => {
         const [rows, cols] = [grid.length, grid[0].length];
 
+        // loop through grid
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < cols; col++) {
+                // see if current cell is not blank
                 const isEmpty = grid[row][col] === 0;
+
+                // if it's not increase the orange count
                 if (!isEmpty)
                     orangeCount++;
 
+                // see if it is rotten
                 const isRotten = grid[row][col] === 2;
+                // if not add to the queue
                 if (isRotten)
                     queue.push([row, col]);
             }
@@ -52,12 +58,15 @@ var orangesRotting = function (grid) {
 
     const bfs = (grid, queue, rottenCount = 0, minutes = 0) => {
         while (queue.length) {
+            // keep track of how many oranges are rotten
             rottenCount += queue.length;
+
 
             for (let i = (queue.length - 1); 0 <= i; i--) {
                 expireFresh(grid, queue);
             }
 
+            // if there are new oranges, increase a minute
             if (queue.length)
                 minutes++;
         }
@@ -69,16 +78,19 @@ var orangesRotting = function (grid) {
         const [rows, cols] = [grid.length, grid[0].length];
         const [row, col] = queue.shift();
 
+        // loop through its neighbors
         for (const [_row, _col] of getNeighbors(row, rows, col, cols)) {
             const isFresh = grid[_row][_col] === 1;
             if (!isFresh)
                 continue;
-
+            // rot it
             grid[_row][_col] = 2;
+            // add it to the queue
             queue.push([_row, _col]);
         }
     }
 
+    // get neighbors in 4 direciton
     var getNeighbors = (row, rows, col, cols) => [[0, 1], [0, -1], [1, 0], [-1, 0]]
         .map(([_row, _col]) => [(row + _row), (col + _col)])
         .filter(([_row, _col]) => (0 <= _row) && (_row < rows) && (0 <= _col) && (_col < cols));
@@ -94,19 +106,22 @@ var orangesRotting = function (grid) {
  * In-place BFS
  * @param {number[][]} grid
  * @return {number}
- * Time: O(N^2)
- * Space: O(1)
+ * Time: O(N^2), where N is size of grid, in each round of BFS, we have to iterate through entire grid
+ * Space: O(1), in place
  */
 var orangesRotting = function (grid, minutes = 2) {
     var expireFresh = (grid, minutes, toBeContinued = false) => {
         const [rows, cols] = [grid.length, grid[0].length];
 
+        // loop through
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < cols; col++) {
+                // see if it's time for this to be rot
                 const isEqual = grid[row][col] === minutes;
                 if (!isEqual)
                     continue;
 
+                // loop trough its neighbors and update timestamp
                 for (const [_row, _col] of getNeighbors(row, rows, col, cols)) {
                     const isFresh = grid[_row][_col] === 1;
                     if (!isFresh)
@@ -125,6 +140,7 @@ var orangesRotting = function (grid, minutes = 2) {
         .map(([_row, _col]) => [(row + _row), (col + _col)])
         .filter(([_row, _col]) => (0 <= _row) && (_row < rows) && (0 <= _col) && (_col < cols));
 
+    // check if there are any remaining fresh oranges
     const hasFresh = (grid) => {
         for (const row of grid) {
             for (const cell of row) {
