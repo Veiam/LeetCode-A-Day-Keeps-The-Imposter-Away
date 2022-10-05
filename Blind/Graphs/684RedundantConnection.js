@@ -41,7 +41,7 @@ var findRedundantConnection = function (edges) {
 
     }
 
-    function check(prev, source, target, visited) {
+    function check(source, target, visited) {
         for (let next of adjList[source].values()) {
             // if we visited this vertice already, move on
             if (visited.has(next)) {
@@ -74,6 +74,7 @@ var findRedundantConnection = function (edges) {
     const parents = new Array(edges.length + 1).fill().map((val, index) => index);
     const ranks = new Array(edges.length + 1).fill(1);
     for (let [x, y] of edges) {
+        //  find which one should be a parent
         if (ranks[x] >= ranks[y]) {
             if (union(x, y))
                 return [x, y];
@@ -84,19 +85,29 @@ var findRedundantConnection = function (edges) {
         }
     }
 
-    // union find
-    function find(x) {
-        if (parents[x] != x) {
-            parents[x] = find(parents[x]);
-        }
-        return parents[x];
-    }
+
     function union(parent, child) {
-        if (find(parent) === find(child)) {
+        // find a parent of child
+        let childP = find(child);
+        // find a parent of parent
+        let parentP = find(parent);
+
+        // if they are equal, then it's redundant
+        if (parentP === childP) {
             return true;
         }
-        parents[find(child)] = parents[parent];
-        ranks[parent]++;
 
+        // update child's parent and increase parent's rank
+        parents[childP] = parentP;
+        ranks[parentP]++;
+    }
+
+    function find(node) {
+        // same thing as while loop to find parent
+        if (parents[node] != node) {
+            parents[node] = find(parents[node]);
+        }
+
+        return parents[node];
     }
 };

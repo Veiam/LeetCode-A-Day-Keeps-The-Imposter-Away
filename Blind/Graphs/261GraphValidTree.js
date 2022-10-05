@@ -109,3 +109,55 @@ var validTree = function (n, edges) {
     return seen.size === n;
 
 };
+
+/**
+ * @param {number} n
+ * @param {number[][]} edges
+ * @return {boolean}
+ * Time and space: O(n), union find
+ */
+var validTree = function (n, edges) {
+    const parents = new Array(n).fill().map((val, index) => index);
+    const ranks = new Array(n).fill(1);
+
+    // loop through and perform union find
+    for (let [x, y] of edges) {
+        if (ranks[x] >= ranks[y]) {
+            if (union(x, y))
+                return false;
+        }
+        else {
+            if (union(y, x)) {
+                return false;
+            }
+        }
+    }
+
+    // go through and update parents
+    for (let i = 0; i < n; i++) {
+        parents[i] = find(i);
+    }
+
+    // consolidate to obtain only unique number
+    return (new Set(parents)).size === 1
+
+    function find(node) {
+        if (parents[node] !== node) {
+            parents[node] = find(parents[node]);
+        }
+        return parents[node];
+    }
+
+    function union(parent, child) {
+        const parentP = find(parent);
+        const childP = find(child);
+
+        if (childP === parentP) {
+            return true;
+        }
+
+        parents[childP] = parentP;
+
+        ranks[parentP]++;
+    }
+};

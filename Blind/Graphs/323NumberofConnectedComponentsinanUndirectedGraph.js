@@ -72,3 +72,46 @@ var countComponents = function (n, edges) {
     // return the count
     return count;
 };
+
+/**
+ * @param {number} n
+ * @param {number[][]} edges
+ * @return {number}
+ * Time and Space: O(n), Union find
+ */
+var countComponents = function (n, edges) {
+    const parents = new Array(n).fill().map((val, index) => index);
+    const ranks = new Array(n).fill(1);
+
+    // loop through and perform union finds
+    for (const [x, y] of edges) {
+        if (ranks[x] >= ranks[y]) {
+            union(x, y);
+        } else {
+            union(y, x);
+        }
+    }
+
+    // see if node needs a new parent
+    for (let i = 0; i < n; i++) {
+        parents[i] = find(i);
+    }
+
+    // return the size of unique parents
+    return (new Set(parents)).size;
+
+    function find(node) {
+        if (parents[node] != node) {
+            parents[node] = find(parents[node]);
+        }
+        return parents[node];
+    }
+
+    function union(parent, child) {
+        const parentP = find(parent);
+        const childP = find(child);
+
+        parents[childP] = parentP;
+        ranks[parentP]++;
+    }
+};
