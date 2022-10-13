@@ -24,7 +24,7 @@
  * Space: O(1), constant space
  */
 var singleNumber = function (nums) {
-    // ^ operation of same number result in 0
+    // ^(XOR) operation of same number result in 0
     // so res would have only number that doesn't have a dupe
     return nums.reduce((a, b) => a ^ b);
 };
