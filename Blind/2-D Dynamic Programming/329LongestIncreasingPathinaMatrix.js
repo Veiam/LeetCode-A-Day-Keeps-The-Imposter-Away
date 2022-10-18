@@ -23,39 +23,34 @@
 /**
  * @param {number[][]} matrix
  * @return {number}
- * Time: O(r*c)
- * Space: O(r*c)
+ * Time and space: O(mn)
  */
 var longestIncreasingPath = function (matrix) {
-    let longest = 1;
     const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const memo = new Array(matrix.length).fill().map(() => new Array(matrix[0].length).fill(0));
 
-    const max = new Array(matrix.length).fill().map(() => new Array(matrix[0].length).fill(0));
-    // loop through and recursively explore each cell
+    let res = 0;
+    // loop through
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[0].length; j++) {
-            explore(i, j, -1, 1);
+            res = Math.max(res, explore(i, j));
         }
     }
 
-    function explore(x, y, prev, count) {
-        // check if it's a legal cell
-        if (x < 0 || y < 0 || x >= matrix.length || y >= matrix[0].length) {
-            return;
+    function explore(x, y) {
+        if (memo[x][y] != 0) {
+            return memo[x][y];
         }
-        // check if we've visited this place before or
-        // if it's worth travelling through
-        if (matrix[x][y] <= prev || max[x][y] >= count) {
-            return;
-        }
-        // memoize it and update the longest
-        max[x][y] = count;
-        longest = Math.max(longest, count);
-        // look through its neighbors
         for (let [r, c] of dirs) {
-            explore(r + x, y + c, matrix[x][y], count + 1);
+            r += x;
+            c += y;
+            // check if next cell is valid and greater than current cell
+            if (r >= 0 && c >= 0 && r < matrix.length && c < matrix[0].length && matrix[r][c] > matrix[x][y])
+                // update memoization if we found a new max
+                memo[x][y] = Math.max(memo[x][y], explore(r, c));
         }
-
+        // increase memo[x][y] by 1 to account for current cell
+        return ++memo[x][y];
     }
-    return longest;
+    return res;
 };
