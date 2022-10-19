@@ -54,3 +54,68 @@ var longestIncreasingPath = function (matrix) {
     }
     return res;
 };
+
+/**
+ * @param {number[][]} matrix
+ * @return {number}
+ * Time and space: O(mn)
+ * topological sort, peeling onions
+ */
+var longestIncreasingPath = function (matrix) {
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+    const neighbors = new Array(rows).fill().map(() => new Array(cols));
+    const indegrees = new Array(rows).fill().map(() => new Array(cols));
+
+    // loop through cells and find indegrees and its valid neighbors
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            const cell = matrix[i][j];
+            if (neighbors[i][j] == null) {
+                neighbors[i][j] = [];
+                indegrees[i][j] = 0;
+            }
+            for (let [x, y] of dirs) {
+                x += i;
+                y += j;
+                if (x >= 0 && y >= 0 && x < rows && y < cols && matrix[x][y] > cell) {
+                    if (neighbors[x][y] == null) {
+                        neighbors[x][y] = [];
+                        indegrees[x][y] = 0;
+                    }
+                    indegrees[x][y]++;
+                    neighbors[i][j].push([x, y]);
+                }
+            }
+        }
+    }
+
+    // find all cells with 0 indegrees
+    const lowest = [];
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (indegrees[i][j] === 0) {
+                lowest.push([i, j]);
+            }
+        }
+    }
+
+    // loop through 0 indegrees cell and find new 0 indegrees cell
+    let res = 0;
+    while (lowest.length) {
+        const len = lowest.length;
+        for (let i = 0; i < len; i++) {
+            const [x, y] = lowest.shift();
+            for (let [r, c] of neighbors[x][y]) {
+                indegrees[r][c]--;
+                if (indegrees[r][c] === 0) {
+                    lowest.push([r, c]);
+                }
+            }
+        }
+        res++;
+    }
+
+    return res;
+};
