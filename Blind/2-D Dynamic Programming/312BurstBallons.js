@@ -24,19 +24,18 @@
  * Space: O(n^2), cache
  */
 var maxCoins = function (nums) {
-    // account for edge cases
     nums = [1, ...nums, 1];
 
     // memoization
     const cache = new Array(nums.length).fill().map(() => new Array(nums.length));
 
     function dfs(left, right) {
-        if (left > right) {
+        if (right - left < 0) {
             return 0;
         }
         // divide and conquer
         if (cache[left][right] == null) {
-            let max = 0;
+            cache[left][right] = 0;
             for (let i = left; i <= right; i++) {
                 // calculate max it can get by popping current ballon last
                 const current = nums[left - 1] * nums[i] * nums[right + 1];
@@ -45,13 +44,39 @@ var maxCoins = function (nums) {
                 // calculate max from right sub
                 const rightSub = dfs(i + 1, right);
                 // store max
-                max = Math.max(max, current + leftSub + rightSub);
+                cache[left][right] = Math.max(cache[left][right], current + leftSub + rightSub);
             }
-            // memoize it
-            cache[left][right] = max;
         }
         return cache[left][right];
     }
 
     return dfs(1, nums.length - 2)
+};
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ * Time: O(n^3), there are n^2 sub problems for each number
+ * Space: O(n^2), dp
+ */
+var maxCoins = function (nums) {
+    nums = [1, ...nums, 1];
+
+    const dp = new Array(nums.length).fill().map(() => new Array(nums.length).fill(0));
+
+    // we loop from nums.length - 2 because we added 2 fake balloons
+    for (let left = nums.length - 2; left >= 1; left--) {
+        for (let right = left; right <= nums.length - 2; right++) {
+            // find the last burst one in newNums[left]...newNums[right]
+            for (let i = left; i <= right; i++) {
+                // newNums[i] is the last burst one
+                const cur = nums[left - 1] * nums[i] * nums[right + 1];
+                // same thing as recursively calling left side and right side
+                const rem = dp[left][i - 1] + dp[i + 1][right];
+                dp[left][right] = Math.max(cur + rem, dp[left][right]);
+            }
+        }
+    }
+    // burst newNums[1]...newNums[n-2], excluding the first one and the last one
+    return dp[1][nums.length - 2];
 };

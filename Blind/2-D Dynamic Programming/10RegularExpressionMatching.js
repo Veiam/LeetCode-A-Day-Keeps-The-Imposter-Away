@@ -31,48 +31,62 @@
  * Time: O(s*p)
  */
 var isMatch = function (s, p) {
-    const memo = new Array(s.length).fill().map(() => new Array(p.length));
+    const memo = new Array(s.length + 1).fill().map(() => new Array(p.length + 1));
     function dfs(x, y) {
-        // if either reached oob
-        if (x < 0 || y < 0) {
-            // if there are still pattern left
-            while (y >= 0) {
-                // only valid pattern left should be [a-z]* repeating
-                if (p[y] !== "*") {
-                    return false;
-                }
-                y -= 2;
-            }
-            return x < 0;
+        // if it's over 
+        if (x > s.length || y > p.length) {
+            return false;
         }
 
-        if (memo[x][y] == null) {
+        if (y == p.length) {
+            memo[x][y] = x == s.length;
+        }
+        else if (memo[x][y] == null) {
             const sChar = s[x];
             const pChar = p[y];
-            // if chars match or pattern is wild card
-            if (pChar === "." || sChar === pChar) {
-                memo[x][y] = dfs(x - 1, y - 1);
-            }
-            // repeating pattern
-            else if (pChar === "*") {
-                // check previous char
-                const prev = p[y - 1];
-                // if they match or if it's wild
-                if (prev === "." || sChar === prev) {
-                    // we have two choices of keep using the pattern
-                    // or stop using current pattern and moving on to next
-                    memo[x][y] = dfs(x - 1, y) || dfs(x - 1, y - 2);
-                }
-                // if they don't match, check if it matches by not using pattern
-                memo[x][y] ||= dfs(x, y - 2);
+            // see if they match or pattern is wild card
+            const match = pChar === "." || sChar === pChar;
+            // check if next char is repeating
+            if (p[y + 1] === "*") {
+                // case 1, if curret char is matchig then check if next char is also matching
+                // case 2, check if pattern after repeating matches
+                memo[x][y] = match && dfs(x + 1, y) || dfs(x, y + 2);
             }
             else {
-                memo[x][y] = false;
+                // move both pattern and char
+                memo[x][y] = match && dfs(x + 1, y + 1);
             }
+
         }
         return memo[x][y];
     }
 
-    // start from backword so we catch repeating pattern
-    return dfs(s.length - 1, p.length - 1);
+    return dfs(0, 0);
+};
+/**
+ * @param {string} s
+ * @param {string} p
+ * @return {boolean}
+ * Time: O(s*p)
+ */
+var isMatch = function (s, p) {
+    const dp = new Array(s.length + 1).fill().map(() => new Array(p.length + 1).fill());
+    dp[s.length][p.length] = true;
+
+    // we loop from s.length to 0 because we need to check if we can match empty string
+    for (let i = s.length; i >= 0; i--) {
+        for (let j = p.length - 1; j >= 0; j--) {
+            const match = p[j] === "." || s[i] === p[j];
+            if (p[j + 1] === "*") {
+                // case 1, if curret char is matchig then check if next char is also matching
+                // case 2, check if pattern after repeating matches
+                dp[i][j] = match && dp[i + 1]?.[j] || dp[i][j + 2];
+            }
+            else {
+                // move both pattern and char
+                dp[i][j] = match && dp[i + 1]?.[j + 1];
+            }
+        }
+    }
+    return dp[0][0] || false;
 };
