@@ -1,7 +1,7 @@
 # LeetCode-A-Day-Keeps-The-Imposter-Away
 
 ## Blind
-Folder for Blind 75 + NeetCode 150 + Grind 169
+Folder for Blind 75 + NeetCode 150
 
 ## Plans
 https://leetcode.com/study-plan/
