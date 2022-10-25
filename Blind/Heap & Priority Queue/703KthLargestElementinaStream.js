@@ -80,6 +80,7 @@ class KthLargest {
      * @constructor
      * Time complexity: O(nlogk)
      * Space complexity: O(k)
+     */
     constructor(k, nums) {
         this.heap = new MinHeap(nums, k);
     }
