@@ -20,8 +20,11 @@
 // fromi and toi consist of uppercase English letters.
 // fromi != toi
 /**
+ * Back tracking + Greedy
  * @param {string[][]} tickets
  * @return {string[]}
+ * Time: O(n ^ m), n is number of total flights and m is maximum number of flights
+ * Space: O(n + v), v is number of airports
  */
 var findItinerary = function (tickets) {
     // Sort and build adjancet map
@@ -62,4 +65,39 @@ var findItinerary = function (tickets) {
     }
 
     return res;
+};
+/**
+ * Hierholzer's Algorithm, eulerian path
+ * @param {string[][]} tickets
+ * @return {string[]}
+ * Time: O(n * log(n/m)), n is number of total flights and m is number of airports
+ * Space: O(n + m)
+ */
+var findItinerary = function (tickets) {
+    tickets.sort();
+    const adjs = {}
+    // build an adjs map
+    for (let [from, to] of tickets) {
+        if (!(from in adjs)) {
+            adjs[from] = [];
+        }
+        adjs[from].push(to);
+        if (!(to in adjs)) {
+            adjs[to] = [];
+        }
+    }
+
+    let res = [];
+    dfs("JFK");
+    function dfs(from) {
+        // visit its neighbors
+        while (adjs[from].length) {
+            dfs(adjs[from].shift())
+        }
+        // if there is no neighbor left, push the airport to result
+        res.push(from);
+    }
+
+    // reverse postorder DFS
+    return res.reverse();
 };
