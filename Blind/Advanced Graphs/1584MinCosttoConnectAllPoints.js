@@ -53,3 +53,124 @@ var minCostConnectPoints = function (points) {
     }
     return sum;
 };
+
+class UnionFind {
+    constructor(size) {
+        this.group = new Array(size).fill(0);
+        this.rank = new Array(size).fill(0);
+        for (let i = 0; i < size; ++i) {
+            this.group[i] = i;
+        }
+    }
+
+    find(node) {
+        if (this.group[node] != node) {
+            this.group[node] = this.find(this.group[node]);
+        }
+        return this.group[node];
+    }
+
+    union(node1, node2) {
+        let group1 = this.find(node1);
+        let group2 = this.find(node2);
+
+        // node1 and node2 already belong to same group.
+        if (group1 == group2) {
+            return false;
+        }
+
+        if (this.rank[group1] > this.rank[group2]) {
+            this.group[group1] = group2;
+        } else if (this.rank[group1] < this.rank[group2]) {
+            this.group[group2] = group1;
+        } else {
+            this.group[group1] = group2;
+            this.rank[group1]++;
+        }
+
+        return true;
+    }
+};
+
+/**
+ * Kruskal's algorithm
+ * @param {number[][]} points
+ * @return {number}
+ * Time: O(n^2 * logn), there can be n^2 edges and each enqueue and dequeue takes logn
+ * Space: O(n^2), store edges
+ */
+class UnionFind {
+    constructor(size) {
+        this.group = new Array(size).fill(0);
+        this.rank = new Array(size).fill(0);
+        for (let i = 0; i < size; ++i) {
+            this.group[i] = i;
+        }
+    }
+
+    find(node) {
+        if (this.group[node] != node) {
+            this.group[node] = this.find(this.group[node]);
+        }
+        return this.group[node];
+    }
+
+    union(node1, node2) {
+        let group1 = this.find(node1);
+        let group2 = this.find(node2);
+
+        // node1 and node2 already belong to same group.
+        if (group1 == group2) {
+            return false;
+        }
+
+        if (this.rank[group1] > this.rank[group2]) {
+            this.group[group1] = group2;
+        } else if (this.rank[group1] < this.rank[group2]) {
+            this.group[group2] = group1;
+        } else {
+            this.group[group1] = group2;
+            this.rank[group1]++;
+        }
+
+        return true;
+    }
+};
+
+/**
+ * Prim's algorithm, optimized
+ * @param {number[][]} points
+ * @return {number}
+ * Time: O(n^2), instead of minheap use array with greedy
+ * Space: O(n), store dist and visits
+ */
+let minCostConnectPoints = function (points) {
+    const visited = new Array(points.length).fill(false);
+    const minDist = new Array(points.length).fill(Infinity);
+
+    let edges = points.length - 1;
+    let start = 0;
+    visited[0] = true;
+    let res = 0;
+    while (edges) {
+        let min = Infinity;
+        let minIndex = 0;
+        for (let i = 0; i < points.length; i++) {
+            if (!visited[i]) {
+                minDist[i] = Math.min(minDist[i], getDist(start, i));
+                if (minDist[i] < min) {
+                    min = minDist[i];
+                    minIndex = i;
+                }
+            }
+        }
+        start = minIndex;
+        visited[start] = true;
+        edges--;
+        res += min === Infinity ? 0 : min;
+    }
+    return res;
+    function getDist(p1, p2) {
+        return Math.abs(points[p1][0] - points[p2][0]) + Math.abs(points[p1][1] - points[p2][1]);
+    }
+};
