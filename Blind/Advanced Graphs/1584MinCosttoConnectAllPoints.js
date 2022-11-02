@@ -17,80 +17,6 @@
 // 1 <= points.length <= 1000
 // -106 <= xi, yi <= 106
 // All pairs (xi, yi) are distinct.
-/**
- * Prim's algorithm
- * @param {number[][]} points
- * @return {number}
- * Time: O(n^2 * logn), there can be n^2 edges and each enqueue and dequeue takes logn
- * Space: O(n^2), store edges
- */
-var minCostConnectPoints = function (points) {
-    let sum = 0;;
-    const visit = new Set();
-    const frontier = new MinPriorityQueue();
-    let start = 0;
-    // minimum spanning tree
-    while (visit.size !== points.length) {
-        for (i = 0; i < points.length; i++) {
-            // if we visited this node already then move on
-            if (visit.has(i)) {
-                continue;
-            }
-            // if not calculate the distance and add to the frontier
-            const distance = Math.abs(points[start][0] - points[i][0]) + Math.abs(points[start][1] - points[i][1]);
-            frontier.enqueue([distance, i], distance);
-        }
-
-        // remove all frontier that has been visited
-        while (visit.has(frontier.front().element[1])) {
-            frontier.dequeue();
-        }
-        // get the min edge and add to the sum
-        const [distance, point] = frontier.dequeue().element;
-        visit.add(point);
-        start = point;
-        sum += distance;
-    }
-    return sum;
-};
-
-class UnionFind {
-    constructor(size) {
-        this.group = new Array(size).fill(0);
-        this.rank = new Array(size).fill(0);
-        for (let i = 0; i < size; ++i) {
-            this.group[i] = i;
-        }
-    }
-
-    find(node) {
-        if (this.group[node] != node) {
-            this.group[node] = this.find(this.group[node]);
-        }
-        return this.group[node];
-    }
-
-    union(node1, node2) {
-        let group1 = this.find(node1);
-        let group2 = this.find(node2);
-
-        // node1 and node2 already belong to same group.
-        if (group1 == group2) {
-            return false;
-        }
-
-        if (this.rank[group1] > this.rank[group2]) {
-            this.group[group1] = group2;
-        } else if (this.rank[group1] < this.rank[group2]) {
-            this.group[group2] = group1;
-        } else {
-            this.group[group1] = group2;
-            this.rank[group1]++;
-        }
-
-        return true;
-    }
-};
 
 /**
  * Kruskal's algorithm
@@ -137,6 +63,35 @@ class UnionFind {
     }
 };
 
+let minCostConnectPoints = function (points) {
+    let n = points.length;
+    let allEdges = new MinPriorityQueue();
+
+    // Storing all edges of our complete graph.
+    for (let currNode = 0; currNode < n; ++currNode) {
+        for (let nextNode = currNode + 1; nextNode < n; ++nextNode) {
+            let weight = Math.abs(points[currNode][0] - points[nextNode][0]) +
+                Math.abs(points[currNode][1] - points[nextNode][1]);
+
+            allEdges.enqueue([weight, currNode, nextNode], weight);
+        }
+    }
+
+    let uf = new UnionFind(n);
+    let mstCost = 0;
+    let edgesUsed = 0;
+
+    while (allEdges.size() && edgesUsed < n - 1) {
+        let [weight, node1, node2] = allEdges.dequeue().element;
+
+        if (uf.union(node1, node2)) {
+            mstCost += weight;
+            edgesUsed++;
+        }
+    }
+
+    return mstCost;
+};
 /**
  * Prim's algorithm, optimized
  * @param {number[][]} points
