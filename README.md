@@ -5,4 +5,4 @@ Folder for LeetCode problems
 
 ## NonLeet
 Folder for Non-LeetCode problems
-(Consolidated from JavaScript-Has-Nothing-To-Do-With-Coffee Repo)
+(Consolidated from [JavaScript-Has-Nothing-To-Do-With-Coffee](https://github.com/Veiam/JavaScript-Has-Nothing-To-Do-With-Coffee) Repo)
